@@ -375,6 +375,11 @@ footer span.right
 		font-size: 18px;
 		line-height: 25.2px;
 	}
+	/* form */
+	form
+	{
+		gap: 16px;
+	}
 	/* footer */
 	footer .container
 	{
