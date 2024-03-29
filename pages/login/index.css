@@ -43,7 +43,7 @@ form .wrapper
 }
 form img {
 	top: 16px;
-	right: 16px;
+	right: 24px;
 	position: absolute;
 }
 form input
@@ -119,7 +119,7 @@ form:invalid button {
 	/* header */
 	header
 	{
-		margin: 40px 0px;
+		margin: 50px 0px;
 	}
 	header img
 	{
@@ -152,7 +152,7 @@ form:invalid button {
 	/* header */
 	header
 	{
-		margin: 40px 0px;
+		padding: 50px 0px;
 	}
 	header img
 	{

@@ -1,11 +1,37 @@
 @import url("/common/index.css");
 @import url("/pages/login/index.css");
 
-form
+/* device: PC */
+@media screen and (min-width: 1200px)
 {
-	gap: 16px;
+	/*
+	form
+	{
+		gap: 24px;
+	}
+	*/
 }
-button
+/* device: Tablet */
+@media screen and (min-width: 768px) and (max-width: 1199px)
 {
-	margin-top: 8px;
+	header
+	{
+		padding-bottom: 24px;
+	}
+	form
+	{
+		gap: 16px;
+	}
+	button
+	{
+		margin: 8px 0px;
+	}
+}
+/* device: Mobile */
+@media screen and (min-width: 375px) and (max-width: 767px)
+{
+	form
+	{
+		gap: 16px;
+	}
 }
