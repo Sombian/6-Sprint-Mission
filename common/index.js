@@ -1,3 +1,5 @@
+import "./plugins/index.js";
+
 if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.location))
 {
 	const device = Object.freeze({
@@ -15,10 +17,6 @@ if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.locati
 		}
 		default:
 		{
-			function clamp(value, min, max)
-			{
-				return value < min ? min : max < value ? max : value;
-			}
 			function simulate()
 			{
 				window.resizeTo(device[Object.keys(device)[index]] + (window.outerWidth - window.innerWidth), window.outerHeight);
@@ -30,13 +28,13 @@ if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.locati
 				{
 					case "ArrowUp": case "ArrowRight":
 					{
-						index = clamp(index + 1, 0, Object.keys(device).length - 1);
+						index = (index + 1).clamp(0, Object.keys(device).length - 1);
 						simulate();
 						break;
 					}
 					case "ArrowDown": case "ArrowLeft":
 					{
-						index = clamp(index - 1, 0, Object.keys(device).length - 1);
+						index = (index - 1).clamp(0, Object.keys(device).length - 1);
 						simulate();
 						break;
 					}

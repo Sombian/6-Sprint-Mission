@@ -91,13 +91,11 @@ main .type
 }
 main .title
 {
-	color: var(--gray800);
 	font-weight: 700;
 	margin-bottom: 24px;
 }
 main .about
 {
-	color: var(--gray800);
 	font-weight: 500;
 	margin-bottom: 0px;
 }
