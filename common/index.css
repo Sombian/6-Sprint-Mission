@@ -31,6 +31,10 @@ body
 {
 	font-family: "Pretendard";
 }
+body > *
+{
+	position: relative;
+}
 /* anchor */
 a[href]
 {

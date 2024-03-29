@@ -1,14 +1,7 @@
-if (false)
+if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.location))
 {
 	const device = Object.freeze({
-		["Mobile@Min"]: 375, ["Mobile@Max"]: 744, ["Tablet@Min"]: 768, ["Tablet@Max"]: 1199, ["PC@Min"]: 1200, ["PC"]: 1920,
-	});
-
-	Object.defineProperty(Number.prototype, "clamp", {
-		value(min, max)
-		{
-			return this < min ? min : max < this ? max : this;
-		}
+		["Mobile@Min"]: 375, ["Mobile@Max"]: 744, ["Tablet@Min"]: 768, ["Tablet@Max"]: 1199, ["PC@Min"]: 1200, ["PC@FHD"]: 1920,
 	});
 
 	let index = Object.keys(device).length - 1;
@@ -17,14 +10,18 @@ if (false)
 	{
 		case null:
 		{
-			window.open(window.location, "emulator", ["popup", `width=${device[Object.keys(device)[index]]}`].join(","));
+			window.open(window.location, "simulation", ["popup", `width=${device[Object.keys(device)[index]]}`].join(","));
 			break;
 		}
 		default:
 		{
-			function emulate(value)
+			function clamp(value, min, max)
 			{
-				index = value.clamp(0, Object.keys(device).length - 1); window.resizeTo(device[Object.keys(device)[index]] + (window.outerWidth - window.innerWidth), window.outerHeight);
+				return value < min ? min : max < value ? max : value;
+			}
+			function simulate()
+			{
+				window.resizeTo(device[Object.keys(device)[index]] + (window.outerWidth - window.innerWidth), window.outerHeight);
 			}
 
 			window.addEventListener("keydown", (event) =>
@@ -33,12 +30,14 @@ if (false)
 				{
 					case "ArrowUp": case "ArrowRight":
 					{
-						emulate(index + 1);
+						index = clamp(index + 1, 0, Object.keys(device).length - 1);
+						simulate();
 						break;
 					}
 					case "ArrowDown": case "ArrowLeft":
 					{
-						emulate(index - 1);
+						index = clamp(index - 1, 0, Object.keys(device).length - 1);
+						simulate();
 						break;
 					}
 				}

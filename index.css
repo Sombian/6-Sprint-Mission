@@ -1,9 +1,5 @@
 @import url("/common/index.css");
 
-body > *
-{
-	position: relative;
-}
 /* header */
 header
 {
