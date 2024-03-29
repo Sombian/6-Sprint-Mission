@@ -1,117 +1,213 @@
-* {
-	border: none;
-	outline: none;
-}
+@import url("/common/index.css");
 
-header > .container
+/* header */
+header
 {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-top: 60px;
-	margin-bottom: 40px;
 }
-header > .container > #logo > img
-{
-	width: 396px;
-	height: 132px;
+/* main */
+main {
+	display: flex;
+	justify-content: center;
 }
-
-main > .container
-{
-	width: 640px;
-	margin-left: auto;
-	margin-right: auto;
-}
-main > .container > form
+main .container
 {
 	gap: 24px;
+	width: 100%;
 	display: flex;
+	padding-left: 16px;
+	padding-right: 16px;
 	flex-direction: column;
 }
-main > .container > form > .field
+/* form */
+form
 {
-	gap: 16px;
 	display: flex;
 	flex-direction: column;
 }
-main > .container > form > .field > .wrapper 
+form .field
+{
+	display: flex;
+	flex-direction: column;
+}
+form label
+{
+	color: #1F2937;
+	font-weight: 700;
+}
+form .wrapper 
 {
 	position: relative;
 }
-main > .container > form > .field > .wrapper > img {
+form img {
 	top: 16px;
 	right: 16px;
 	position: absolute;
 }
-main > .container > form > .field > label
-{
-	color: #1F2937;
-	font-size: 18px;
-	font-weight: 700;
-}
-main > .container > form > .field input
+form input
 {
 	width: 100%;
 	height: 56px;
+	padding: 0px 24px;
 	border-radius: 12px;
 	background-color: #F3F4F6;
 }
-main > .container > form > .field input:focus
+form input:focus
 {
 	outline: #369EFF solid thin;
 }
-main > .container > form > .field input::placeholder
+form input::placeholder
 {
 	color: #9CA3AF;
 	font-size: 16px;
 	font-weight: 400;
 }
-main > .container > form > button
+form button
 {
-	color: #FFFFFF;
+	color: white;
+	height: 56px;
 	font-size: 20px;
 	font-weight: 600;
-	height: 56px;
+	line-height: 24px;
 	border-radius: 40px;
 }
-main > .container > form:invalid > button {
+form:invalid button {
 	cursor: not-allowed;
-	background-color: #9CA3AF !important;
+	background-color: #9CA3AF;
 }
-main > .container > form > .third-party
+/* .third-party */
+.third-party
 {
 	color: #1F2937;
 	font-size: 16px;
 	line-height: 24px;
 	font-weight: 500;
 	height: 74px;
+	padding: 0px 24px;
+	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-radius: 8px;
 	background-color: #E6F2FF;
 }
-main > .container > form > .third-party > .service
+.third-party .wrapper
 {
 	gap: 16px;
 	display: flex;
 }
-main > .container > form > .third-party > .service > a
+.third-party .service
 {
 	display: inline-flex;
 }
-main > .container > form > p
+/* helper */
+.helper
 {
 	text-align: center;
+	font-size: 15px;
+	line-height: 17.9px;
 }
-main > .container > form > p > a {
+.helper a[href] {
 	color: var(--blue);
 	text-decoration: underline;
 }
-.field input,
-.third-party
+/* device: PC */
+@media screen and (min-width: 1200px)
 {
-	padding-left: 23px;
-	padding-right: 23px;
+	/* header */
+	header
+	{
+		margin: 40px 0px;
+	}
+	header img
+	{
+		width: 396px;
+		height: 132px;
+	}
+	/* main */
+	main .container
+	{
+		max-width: 640px;
+	}
+	/* form */
+	form
+	{
+		gap: 24px;
+	}
+	form .field
+	{
+		gap: 16px;
+	}
+	form label
+	{
+		font-size: 18px;
+		line-height: 21.48px;
+	}
+}
+/* device: Tablet */
+@media screen and (min-width: 768px) and (max-width: 1199px)
+{
+	/* header */
+	header
+	{
+		margin: 40px 0px;
+	}
+	header img
+	{
+		width: 396px;
+		height: 132px;
+	}
+	/* main */
+	main .container
+	{
+		max-width: 640px;
+	}
+	/* form */
+	form
+	{
+		gap: 24px;
+	}
+	form .field
+	{
+		gap: 16px;
+	}
+	form label
+	{
+		font-size: 18px;
+		line-height: 21.48px;
+	}
+}
+/* device: Mobile */
+@media screen and (min-width: 375px) and (max-width: 767px)
+{
+	/* header */
+	header
+	{
+		margin: 24px 0px;
+	}
+	header img
+	{
+		width: 198px;
+		height: 66px;
+	}
+	/* main */
+	main .container
+	{
+		max-width: 400px;
+	}
+	/* form */
+	form
+	{
+		gap: 16px;
+	}
+	form .field
+	{
+		gap: 8px;
+	}
+	form label
+	{
+		font-size: 14px;
+		line-height: 16.71px;
+	}
 }

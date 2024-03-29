@@ -1,1 +1,11 @@
+@import url("/common/index.css");
 @import url("/pages/login/index.css");
+
+form
+{
+	gap: 16px;
+}
+button
+{
+	margin-top: 8px;
+}

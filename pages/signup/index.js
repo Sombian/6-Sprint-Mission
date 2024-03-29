@@ -1,18 +1,19 @@
+import "/common/index.js";
 import "/pages/login/index.js";
 
-const [password, password_confirm] = [document.querySelector(`#password`), document.querySelector(`#password-confirm`)];
+const [new_password, confirm_password] = [document.querySelector("#new-password"), document.querySelector("#confirm-password")];
 
 function validator()
 {
-	password_confirm.setCustomValidity(password.value === password_confirm.value ? `` : `비밀번호 불일치`);
+	confirm_password.setCustomValidity(new_password.value === confirm_password.value ? "" : "비밀번호 불일치");
 }
 
-for (const element of [password, password_confirm])
+for (const element of [new_password, confirm_password])
 {
-	element.addEventListener(`change`, (event) => {
+	element.addEventListener("change", (event) => {
 		validator();
 	});
-	element.addEventListener(`keyup`, (event) => {
+	element.addEventListener("keyup", (event) => {
 		validator();
 	});
 }

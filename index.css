@@ -1,90 +1,71 @@
+@import url("/common/index.css");
+
+body > *
+{
+	position: relative;
+}
+/* header */
 header
 {
 	top: 0px;
 	position: sticky;
-	background-color: #FFFFFF;
+	background-color: white;
 }
-header > .container
+header .container
 {
 	height: 70px;
-	margin-left: 200px;
-	margin-right: 200px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-header > .container > a
+header a
 {
 	gap: 10px;
 	display: flex;
-	flex-shrink: 0;
-	align-items: center;
 }
-header > .container > a#logo
+header a.icon
 {
-	color: var(--blue);
 	font-size: 25px;
 	font-weight: 700;
 }
-header > .container > a#login
+header a.button
 {
-	color: #FFFFFF;
-	font-weight: 600;
 	width: 128px;
 	height: 48px;
-	padding: 12px 20px;
+	font-weight: 600;
 	border-radius: 8px;
 }
-
+/* banner */
 .banner
 {
 	overflow: hidden;
 	background-color: #CFE5FF;
 }
-.banner > .container
+.banner .container
 {
-	width: 1200px;
-	height: 540px;
-	position: relative;
 	display: flex;
-	align-items: center;
 	margin-left: auto;
 	margin-right: auto;
+	align-items: center;
+	position: relative;
 	
 }
-.banner > .container > img
+.banner .wrapper
 {
-	left: 340px;
-	bottom: 0px;
-	position: absolute;
-}
-.banner > .container > .wrapper
-{
-	height: 200px;
+	gap: 24px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-.banner:has(.button) > .container > .wrapper
+.banner .title
 {
-	justify-content: space-between;
-}
-.banner > .container > .wrapper > h1
-{
-	font-size: 40px;
 	font-weight: 700;
-	line-height: 56px;
 }
-.banner > .container > .wrapper > a
+.banner .button
 {
-	color: #FFFFFF;
-	font-size: 20px;
-	font-weight: 600;
-	height: 56px;
-	width: 355px;
 	border-radius: 40px;
 }
-
+/* main */
 main
 {
 	display: flex;
@@ -93,78 +74,319 @@ main
 	flex-direction: column;
 	overflow-x: hidden;
 }
-main > section
+main section
 {
-	gap: 64px;
 	display: flex;
 	align-items: center;
-	width: 1200px;
-	height: 720px;
 }
-main > section.left
+main section.left
 {
 	text-align: left;
-	flex-direction: row;
 }
-main > section.right
+main section.right
 {
 	text-align: right;
-	flex-direction: row-reverse;
 }
-main > section > .wrapper > p:first-of-type
+main .type
 {
 	color: var(--blue);
-	font-size: 18px;
 	font-weight: 700;
 	margin-bottom: 12px;
 }
-main > section > .wrapper > h1
+main .title
 {
-	font-size: 40px;
+	color: var(--gray800);
 	font-weight: 700;
-	line-height: 56px;
 	margin-bottom: 24px;
 }
-main > section > .wrapper > p:last-of-type
+main .about
 {
-	color: #374151;
-	font-size: 24px;
+	color: var(--gray800);
 	font-weight: 500;
-	line-height: 28.8px;
+	margin-bottom: 0px;
 }
-
+/* footer */
 footer
 {
-	color: #9CA3AF;
 	font-size: 16px;
 	font-weight: 400;
 	background-color: #111827;
 }
-footer > .container
+footer .container
 {
 	height: 160px;
-	margin-left: 200px;
-	margin-right: 200px;
-	padding-top: 30px;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	justify-content: space-between;
 }
-footer > .container > *
-{
-	display: flex;
-}
-footer > .container > .center
+footer span
 {
 	gap: 30px;
-	color: var(--gray300);
+	display: flex;
 }
-footer > .container > .center > a 
+footer span.left
+{
+	color: var(--gray500);
+}
+footer span.center
 {
 	color: var(--gray300);
 }
-footer > .container > .right
+footer span.right
 {
 	gap: 12px;
+}
+/* device: PC */
+@media screen and (min-width: 1200px)
+{
+	/* header */
+	header .container
+	{
+		margin: 0px 200px;
+	}
+	/* banner */
+	.banner .container
+	{
+		width: 1200px;
+		height: 540px;
+	}
+	.banner .wrapper
+	{
+		height: 325px;
+	}
+	.banner .title
+	{
+		font-size: 40px;
+		line-height: 56px;
+	}
+	.banner .button
+	{
+		width: 355px;
+		height: 60px;
+		font-size: 20px;
+		font-weight: 600;
+	}
+	.banner img
+	{
+		left: 340px;
+		bottom: 0px;
+		position: absolute;
+	}
+	/* main */
+	main
+	{
+		padding-bottom: 120px;
+	}
+	main section
+	{
+		gap: 64px;
+		width: 1200px;
+		height: 720px;
+	}
+	main section.left
+	{
+		flex-direction: row;
+	}
+	main section.right
+	{
+		flex-direction: row-reverse;
+	}
+	main .type
+	{
+		font-size: 18px;
+		line-height: 25.2px;
+	}
+	main .title
+	{
+		font-size: 40px;
+		line-height: 56px;
+	}
+	main .about
+	{
+		font-size: 24px;
+		line-height: 28.8px;
+	}
+	/* footer */
+	footer .container
+	{
+		padding: 32px 104px 64px 104px;
+	}
+}
+/* device: Tablet */
+@media screen and (min-width: 768px) and (max-width: 1199px)
+{
+	/* header */
+	header .container
+	{
+		margin: 0px 24px;
+	}
+	/* banner */
+	.banner .container
+	{
+		flex-direction: column;
+	}
+	.banner .wrapper
+	{
+		height: 325px;
+		text-align: center;
+		align-items: center;
+	}
+	.banner .title
+	{
+		font-size: 40px;
+		line-height: 56px;
+	}
+	.banner .button
+	{
+		width: 355px;
+		height: 60px;
+		font-size: 20px;
+		font-weight: 600;
+	}
+	/* banner @ bottom */
+	.banner:last-of-type
+	{
+		padding-top: 50px;
+	}
+	.banner:last-of-type .wrapper
+	{
+		top: 50px;
+		position: relative;
+	}
+	/* main */
+	main
+	{
+		gap: 24px;
+		padding: 24px;
+		padding-bottom: 80px;
+	}
+	main img,
+	main section
+	{
+		width: 100%;
+	}
+	main section
+	{
+		gap: 24px;
+		flex-direction: column;
+	}
+	main section.left
+	{
+		align-items: flex-start;
+	}
+	main section.right
+	{
+		align-items: flex-end;
+	}
+	main .type
+	{
+		font-size: 18px;
+		line-height: 25.2px;
+	}
+	main .title
+	{
+		font-size: 32px;
+		line-height: 44.8px;
+	}
+	main .about
+	{
+		font-size: 18px;
+		line-height: 21.6px;
+	}
+	/* footer */
+	footer .container
+	{
+		padding: 32px 104px 64px 104px;
+	}
+}
+/* device: Mobile */
+@media screen and (min-width: 375px) and (max-width: 767px)
+{
+	/* header */
+	header .container
+	{
+		margin: 0px 16px;
+	}
+	/* banner */
+	.banner .container
+	{
+		flex-direction: column;
+	}
+	.banner .wrapper
+	{
+		height: 260px;
+		text-align: center;
+		align-items: center;
+	}
+	.banner .title
+	{
+		font-size: 32px;
+		line-height: 44.8px;
+	}
+	.banner .button
+	{
+		width: 154px;
+		height: 48px;
+		font-size: 16px;
+	}
+	.banner img
+	{
+		height: 269.95px;
+	}
+	/* banner @ bottom */
+	.banner:last-of-type .wrapper
+	{
+		top: 50px;
+		position: relative;
+	}
+	/* main */
+	main
+	{
+		gap: 54px;
+		padding: 50px 15.5px;
+	}
+	main img,
+	main section
+	{
+		width: 100%;
+	}
+	main section
+	{
+		gap: 24px;
+		flex-direction: column;
+	}
+	main section.left
+	{
+		align-items: flex-start;
+	}
+	main section.right
+	{
+		align-items: flex-end;
+	}
+	main .type
+	{
+		font-size: 16px;
+		line-height: 22.4px;
+	}
+	main .title
+	{
+		font-size: 24px;
+		line-height: 33.6px;
+	}
+	main .about
+	{
+		font-size: 18px;
+		line-height: 25.2px;
+	}
+	/* footer */
+	footer .container
+	{
+		padding: 32px 32px 64px 32px;
+	}
+	footer .left
+	{
+		bottom: 32px;
+		position: absolute;
+	}
 }
