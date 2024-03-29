@@ -106,6 +106,7 @@ form:invalid button {
 {
 	text-align: center;
 	font-size: 15px;
+	font-weight: 500;
 	line-height: 17.9px;
 }
 .helper a[href] {
