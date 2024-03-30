@@ -1,4 +1,3 @@
-import "/common/index.js";
 import "/pages/login/index.js";
 
 const [new_password, confirm_password] = [document.querySelector("#new-password"), document.querySelector("#confirm-password")];
