@@ -24,6 +24,12 @@ main .container
 /* form */
 form
 {
+	gap: 24px;
+	display: flex;
+	flex-direction: column;
+}
+form .inputs
+{
 	display: flex;
 	flex-direction: column;
 }
@@ -114,7 +120,7 @@ form:invalid button {
 	text-decoration: underline;
 }
 /* device: PC */
-@media screen and (min-width: 1200px)
+@media screen and (1200px <= width)
 {
 	/* header */
 	header
@@ -132,7 +138,7 @@ form:invalid button {
 		max-width: 640px;
 	}
 	/* form */
-	form
+	form .inputs
 	{
 		gap: 24px;
 	}
@@ -147,7 +153,7 @@ form:invalid button {
 	}
 }
 /* device: Tablet */
-@media screen and (min-width: 768px) and (max-width: 1199px)
+@media screen and (768px <= width <= 1199px)
 {
 	/* header */
 	header
@@ -165,7 +171,7 @@ form:invalid button {
 		max-width: 640px;
 	}
 	/* form */
-	form
+	form .inputs
 	{
 		gap: 24px;
 	}
@@ -180,7 +186,7 @@ form:invalid button {
 	}
 }
 /* device: Mobile */
-@media screen and (min-width: 375px) and (max-width: 767px)
+@media screen and (375px <= width <= 767px)
 {
 	/* header */
 	header
@@ -198,7 +204,7 @@ form:invalid button {
 		max-width: 400px;
 	}
 	/* form */
-	form
+	form .inputs
 	{
 		gap: 16px;
 	}
