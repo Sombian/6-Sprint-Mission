@@ -26,13 +26,13 @@ if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.locati
 			{
 				switch (event.key)
 				{
-					case "ArrowUp": case "ArrowRight":
+					case "ArrowRight":
 					{
 						index = (index + 1).clamp(0, Object.keys(device).length - 1);
 						simulate();
 						break;
 					}
-					case "ArrowDown": case "ArrowLeft":
+					case "ArrowLeft":
 					{
 						index = (index - 1).clamp(0, Object.keys(device).length - 1);
 						simulate();

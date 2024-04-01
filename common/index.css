@@ -22,7 +22,7 @@
 	--gray400: #9EA4A8;
 	--gray300: #E5E7EB;
 	--gray100: #E8EBED;
-	--gray50: #F7F7F8;
+	--gray050: #F7F7F8;
 }
 /* body */
 body
@@ -65,7 +65,7 @@ a[href].button:focus
 	}
 }
 /* device: Tablet */
-@media screen and (768px <= width <= 1199px)
+@media screen and (768px <= width < 1200px)
 {
 	.hide-on-tablet
 	{
@@ -73,7 +73,7 @@ a[href].button:focus
 	}
 }
 /* device: Mobile */
-@media screen and (375px <= width <= 767px)
+@media screen and (375px <= width < 768px)
 {
 	.hide-on-mobile
 	{

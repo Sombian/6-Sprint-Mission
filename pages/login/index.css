@@ -17,8 +17,8 @@ main .container
 	gap: 24px;
 	width: 100%;
 	display: flex;
-	padding-left: 16px;
-	padding-right: 16px;
+	margin-left: 16px;
+	margin-right: 16px;
 	flex-direction: column;
 }
 /* form */
@@ -153,7 +153,7 @@ form:invalid button {
 	}
 }
 /* device: Tablet */
-@media screen and (768px <= width <= 1199px)
+@media screen and (768px <= width < 1200px)
 {
 	/* header */
 	header
@@ -186,7 +186,7 @@ form:invalid button {
 	}
 }
 /* device: Mobile */
-@media screen and (375px <= width <= 767px)
+@media screen and (375px <= width < 768px)
 {
 	/* header */
 	header
