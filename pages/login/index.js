@@ -191,13 +191,6 @@ for (const field of document.querySelectorAll("form .field"))
 {
 	for (const record of records)
 	{
-		// for (const removedNode of record.removedNodes)
-		// {
-		// 	if (removedNode.nodeType === 1 && (removedNode.nodeName === "INPUT" || removedNode.querySelector("input") !== undefined))
-		// 	{
-		// 		window.location.reload();
-		// 	}
-		// }
 		if (0 < record.removedNodes.length && document.querySelectorAll("form .field input").length < status.size)
 		{
 			window.location.reload();
@@ -213,7 +206,6 @@ function santuary()
 		{
 			value: Object.freeze(input.validators), writable: false, configurable: false,
 		});
-		console.log(input);
 	}
 }
 
