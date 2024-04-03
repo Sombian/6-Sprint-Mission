@@ -14,7 +14,7 @@
 	<header>
 		<section class="container">
 			<a class="icon" href="/index.html">
-				<img src="/assets/icons/icon_full.svg" alt="판다마켓">
+				<img src="/assets/icons/logo_full.svg" alt="판다마켓">
 			</a>
 		</section>
 	</header>
@@ -31,23 +31,23 @@
 					<div class="field">
 						<label for="username">닉네임</label>
 						<div class="wrapper">
-							<input id="username" type="text" alt="닉네임" minlength="5" maxlength="15" placeholder="닉네임을 입력해주세요" required>
+							<input id="username" type="text" alt="닉네임" minlength="2" maxlength="15" placeholder="닉네임을 입력해주세요" required>
 						</div>
 					</div>
 					<div class="field">
 						<label for="new-password">비밀번호</label>
 						<div class="wrapper">
-							<input id="new-password" type="password" alt="비밀번호" minlength="5" maxlength="20" autocomplete="new-password" placeholder="비밀번호를 입력해주세요" required>
+							<input id="new-password" type="password" alt="비밀번호" minlength="8" maxlength="20" autocomplete="new-password" placeholder="비밀번호를 입력해주세요" required>
 						</div>
 					</div>
 					<div class="field">
 						<label for="confirm-password">비밀번호 확인</label>
 						<div class="wrapper">
-							<input id="confirm-password" type="password" alt="비밀번호 확인" minlength="5" maxlength="20" autocomplete="new-password" placeholder="비밀번호를 다시 한번 입력해주세요" required>
+							<input id="confirm-password" type="password" alt="비밀번호 확인" minlength="8" maxlength="20" autocomplete="new-password" placeholder="비밀번호를 다시 한번 입력해주세요" required>
 						</div>
 					</div>
 				</div>
-				<button class="button" type="submit">
+				<button class="button" data-href="/pages/signup/index.html" type="button" disabled>
 					회원가입
 				</button>
 			</form>
@@ -65,6 +65,10 @@
 	</main>
 </body>
 
-<script type="module" src="./index.js"></script>
+<script type="module">
+	import { santuary } from "./index.js";
+
+	santuary();
+</script>
 
 </html>

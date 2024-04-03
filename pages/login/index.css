@@ -38,6 +38,23 @@ form .field
 	display: flex;
 	flex-direction: column;
 }
+form .field[data-error]::after
+{
+	color: var(--red);
+	content: attr(data-error);
+}
+form .field[data-error=""]::after
+{
+	display: none;
+}
+form .field[data-error] input
+{
+	outline-color: var(--red);
+}
+form .field[data-error=""] input
+{
+	outline-color: #369EFF;
+}
 form label
 {
 	color: #1F2937;
@@ -57,12 +74,9 @@ form input
 	width: 100%;
 	height: 56px;
 	padding: 0px 24px;
+	outline: transparent solid thin;
 	border-radius: 12px;
 	background-color: #F3F4F6;
-}
-form input:focus
-{
-	outline: #369EFF solid thin;
 }
 form input::placeholder
 {
@@ -72,15 +86,15 @@ form input::placeholder
 }
 form button
 {
-	color: white;
+	color: #FFFFFF;
 	height: 56px;
 	font-size: 20px;
 	font-weight: 600;
 	line-height: 24px;
 	border-radius: 40px;
+	background-color: var(--blue);
 }
-form:invalid button {
-	cursor: not-allowed;
+form button:disabled {
 	background-color: #9CA3AF;
 }
 /* .third-party */

@@ -13,7 +13,7 @@
 <body>
 	<header>
 		<a class="icon" href="/index.html">
-			<img src="/assets/icons/icon_full.svg" alt="판다마켓">
+			<img src="/assets/icons/logo_full.svg" alt="판다마켓">
 		</a>
 	</header>
 	<main>
@@ -29,11 +29,11 @@
 					<div class="field">
 						<label for="password">비밀번호</label>
 						<div class="wrapper">
-							<input id="password" type="password" alt="비밀번호" minlength="5" maxlength="20" autocomplete="current-password" placeholder="비밀번호를 입력해주세요" required>
+							<input id="password" type="password" alt="비밀번호" minlength="8" maxlength="20" autocomplete="current-password" placeholder="비밀번호를 입력해주세요" required>
 						</div>
 					</div>
 				</div>
-				<button class="button" type="submit">
+				<button class="button" data-href="/pages/items/index.html" type="button" disabled>
 					로그인
 				</button>
 			</form>
@@ -51,6 +51,10 @@
 	</main>
 </body>
 
-<script type="module" src="./index.js"></script>
+<script type="module">
+	import { santuary } from "./index.js";
+
+	santuary();
+</script>
 
 </html>

@@ -2,24 +2,24 @@ import "./plugins/index.js";
 
 if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.location))
 {
-	const device = Object.freeze({
-		["Mobile@Min"]: 375, ["Mobile@Max"]: 744, ["Tablet@Min"]: 768, ["Tablet@Max"]: 1199, ["PC@Min"]: 1200, ["PC@FHD"]: 1920,
+	const viewport = Object.freeze({
+		["Mobile@Min"]: 375, ["Mobile@Max"]: 768 - 1, ["Tablet@Min"]: 768, ["Tablet@Max"]: 1200 - 1, ["PC@Min"]: 1200, ["PC@FHD"]: 1920,
 	});
 
-	let index = Object.keys(device).length - 1;
+	let index = Object.keys(viewport).length - 1;
 
 	switch (window.opener)
 	{
 		case null:
 		{
-			window.open(window.location, "simulation", ["popup", `width=${device[Object.keys(device)[index]]}`].join(","));
+			window.open(window.location, "simulation", ["popup", `width=${viewport[Object.keys(viewport)[index]]}`].join(","));
 			break;
 		}
 		default:
 		{
 			function simulate()
 			{
-				window.resizeTo(device[Object.keys(device)[index]] + (window.outerWidth - window.innerWidth), window.outerHeight);
+				window.resizeTo(viewport[Object.keys(viewport)[index]] + (window.outerWidth - window.innerWidth), window.outerHeight);
 			}
 
 			window.addEventListener("keydown", (event) =>
@@ -28,13 +28,13 @@ if (/\b(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?::\d{1,5})?)\b/.test(window.locati
 				{
 					case "ArrowRight":
 					{
-						index = (index + 1).clamp(0, Object.keys(device).length - 1);
+						index = (index + 1).clamp(0, Object.keys(viewport).length - 1);
 						simulate();
 						break;
 					}
 					case "ArrowLeft":
 					{
-						index = (index - 1).clamp(0, Object.keys(device).length - 1);
+						index = (index - 1).clamp(0, Object.keys(viewport).length - 1);
 						simulate();
 						break;
 					}

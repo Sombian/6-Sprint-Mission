@@ -3,10 +3,9 @@
 {
 	border: none;
 	outline: none;
-	
 	margin: 0px;
 	padding: 0px;
-	
+	transition: 250ms;
 	box-sizing: border-box;
 }
 /* root */
@@ -34,6 +33,15 @@ body > *
 {
 	position: relative;
 }
+/* button */
+button
+{
+	cursor: pointer;
+}
+button:disabled
+{
+	cursor: not-allowed;
+}
 /* anchor */
 a[href]
 {
@@ -42,7 +50,7 @@ a[href]
 }
 a[href].button
 {
-	color: white;
+	color: #FFFFFF;
 	display: flex;
 	align-items: center;
 	justify-content: center;

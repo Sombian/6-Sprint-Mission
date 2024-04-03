@@ -1,1 +1,1 @@
-import "/common/index.js";
+import {} from "/common/index.js";
