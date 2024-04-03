@@ -106,12 +106,14 @@ for (const field of document.querySelectorAll("form .field"))
 		field.querySelector(".wrapper").append(img);
 	}
 	//
-	// TODO: UUID collision check
+	// UUID collision check
 	//
-	Object.defineProperty(input.dataset, "uuid",
+	let UUID;
+
+	while (status.has(UUID = crypto.randomUUID()))
 	{
-		value: crypto.randomUUID()
-	});
+		continue;
+	}
 	//
 	// add input validation
 	//
@@ -146,7 +148,7 @@ for (const field of document.querySelectorAll("form .field"))
 		}
 	];
 	// default status
-	status.set(input.dataset.uuid, null);
+	status.set(UUID, null);
 	
 	function handler(event)
 	{
@@ -155,12 +157,12 @@ for (const field of document.querySelectorAll("form .field"))
 
 		for (const validator of input.validators)
 		{
-			status.set(input.dataset.uuid, validator(event));
+			status.set(UUID, validator(event));
 
-			if (status.get(input.dataset.uuid) !== undefined)
+			if (status.get(UUID) !== undefined)
 			{
 				// update error message
-				field.dataset.error = status.get(input.dataset.uuid);
+				field.dataset.error = status.get(UUID);
 				return;
 			}
 		}
