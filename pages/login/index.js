@@ -1,6 +1,6 @@
 import {} from "/common/index.js";
 
-const [state, button] = [new Map(), document.querySelector("form button")];
+const [state, form, button] = [new Map(), document.querySelector("form"), document.querySelector("form button")];
 
 button.addEventListener("click", (event) =>
 {
@@ -11,12 +11,12 @@ button.addEventListener("click", (event) =>
 			return;
 		}
 	}
-	location.href = button.dataset.href;
+	location.href = event.target.dataset.href;
 });
 
-for (const field of document.querySelectorAll("form .field"))
+for (const wrapper of form.querySelectorAll(".wrapper"))
 {
-	const input = field.querySelector("input");
+	const input = wrapper.querySelector("input");
 	//
 	// add password visibility toggle button to input
 	//
@@ -49,7 +49,7 @@ for (const field of document.querySelectorAll("form .field"))
 		// apply src
 		img.src = srcs[input.type];
 		// insert toggle button
-		field.querySelector(".wrapper").append(img);
+		wrapper.append(img);
 	}
 	//
 	// UUID collision check
@@ -106,11 +106,11 @@ for (const field of document.querySelectorAll("form .field"))
 			if (state.get(UUID)[index] = validator(event))
 			{
 				// update error message
-				return field.dataset["error"] = state.get(UUID)[index];
+				return wrapper.dataset["error"] = state.get(UUID)[index];
 			}
 		}
 		// clear error message
-		field.dataset["error"] = "null";
+		wrapper.dataset["error"] = "null";
 
 		for (const errors of state.values())
 		{
@@ -133,16 +133,16 @@ for (const field of document.querySelectorAll("form .field"))
 {
 	for (const record of records)
 	{
-		if (0 < record.removedNodes.length && document.querySelectorAll("form .field input").length < state.size)
+		if (0 < record.removedNodes.length && form.querySelectorAll("input").length < state.size)
 		{
 			window.location.reload();
 		}
 	}
-})).observe(document.querySelector("form"), { subtree: true, childList: true });
+})).observe(form, { subtree: true, childList: true });
 
 function santuary()
 {
-	for (const input of document.querySelectorAll("form .field input"))
+	for (const input of form.querySelectorAll("input"))
 	{
 		Object.defineProperty(input, "validators",
 		{

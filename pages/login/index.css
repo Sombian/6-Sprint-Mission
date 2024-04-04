@@ -38,23 +38,6 @@ form .field
 	display: flex;
 	flex-direction: column;
 }
-form .field[data-error]::after
-{
-	color: var(--red);
-	content: attr(data-error);
-}
-form .field[data-error="null"]::after
-{
-	display: none;
-}
-form .field[data-error] input
-{
-	outline-color: var(--red);
-}
-form .field[data-error="null"] input
-{
-	outline-color: #369EFF;
-}
 form label
 {
 	color: #1F2937;
@@ -63,6 +46,32 @@ form label
 form .wrapper 
 {
 	position: relative;
+}
+form .wrapper::after
+{
+	display: block;
+	margin-top: 8px;
+	margin-left: 16px;
+	color: var(--red);
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 17.9px;
+}
+form .wrapper[data-error]::after
+{
+	content: attr(data-error);
+}
+form .wrapper[data-error="null"]::after
+{
+	display: none;
+}
+form .wrapper[data-error] input
+{
+	outline-color: var(--red);
+}
+form .wrapper[data-error="null"] input
+{
+	outline-color: #369EFF;
 }
 form img {
 	top: 16px;

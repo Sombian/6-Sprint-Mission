@@ -46,6 +46,7 @@ button:disabled
 a[href]
 {
 	color: inherit;
+	cursor: pointer;
 	text-decoration: none;
 }
 a[href].button
