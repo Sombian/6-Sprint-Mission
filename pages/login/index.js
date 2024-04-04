@@ -1,14 +1,17 @@
 import {} from "/common/index.js";
 
-const [status, button] = [new Map(), document.querySelector("form button")];
+const [state, button] = [new Map(), document.querySelector("form button")];
 
 button.addEventListener("click", (event) =>
 {
-	if (!button.disabled)
+	for (const errors of state.values())
 	{
-		location.href = button.dataset.href;
+		if (errors.filter((element, index, array) => typeof element === "string").isNotEmpty)
+		{
+			return;
+		}
 	}
-	return false;
+	location.href = button.dataset.href;
 });
 
 for (const field of document.querySelectorAll("form .field"))
@@ -53,14 +56,14 @@ for (const field of document.querySelectorAll("form .field"))
 	//
 	let UUID;
 
-	while (status.has(UUID = crypto.randomUUID()))
+	while (state.has(UUID = crypto.randomUUID()))
 	{
 		continue;
 	}
 	//
 	// add input validations
 	//
-	input.validators = [
+	input["validators"] = [
 		(event) =>
 		{
 			if (event.target.value.isEmpty)
@@ -90,31 +93,28 @@ for (const field of document.querySelectorAll("form .field"))
 			}
 		}
 	];
-	// default status
-	status.set(UUID, null);
+	// default state
+	state.set(UUID, new Array(input["validators"].length).fill("null"));
 	
 	function handler(event)
 	{
 		// disable
 		button.disabled = true;
 
-		for (const validator of input.validators)
+		for (const [index, validator] of Object.entries(input["validators"]))
 		{
-			status.set(UUID, validator(event));
-
-			if (status.get(UUID) !== undefined)
+			if (state.get(UUID)[index] = validator(event))
 			{
 				// update error message
-				field.dataset.error = status.get(UUID);
-				return;
+				return field.dataset["error"] = state.get(UUID)[index];
 			}
 		}
 		// clear error message
-		field.dataset.error = "";
+		field.dataset["error"] = "null";
 
-		for (const error of status.values())
+		for (const errors of state.values())
 		{
-			if (error !== undefined)
+			if (errors.filter((element, index, array) => typeof element === "string").isNotEmpty)
 			{
 				return;
 			}
@@ -133,7 +133,7 @@ for (const field of document.querySelectorAll("form .field"))
 {
 	for (const record of records)
 	{
-		if (0 < record.removedNodes.length && document.querySelectorAll("form .field input").length < status.size)
+		if (0 < record.removedNodes.length && document.querySelectorAll("form .field input").length < state.size)
 		{
 			window.location.reload();
 		}
@@ -146,7 +146,7 @@ function santuary()
 	{
 		Object.defineProperty(input, "validators",
 		{
-			value: Object.freeze(input.validators), writable: false, configurable: false,
+			value: Object.freeze(input["validators"]), writable: false, configurable: false,
 		});
 	}
 }

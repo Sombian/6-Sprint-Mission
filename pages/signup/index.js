@@ -2,7 +2,7 @@ import { santuary } from "/pages/login/index.js";
 
 const [new_password, confirm_password] = [document.querySelector("#new-password"), document.querySelector("#confirm-password")];
 
-confirm_password.validators = [
+confirm_password["validators"] = [
 	(event) =>
 	{
 		if (new_password.value !== confirm_password.value)

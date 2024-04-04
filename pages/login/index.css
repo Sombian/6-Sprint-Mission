@@ -43,7 +43,7 @@ form .field[data-error]::after
 	color: var(--red);
 	content: attr(data-error);
 }
-form .field[data-error=""]::after
+form .field[data-error="null"]::after
 {
 	display: none;
 }
@@ -51,7 +51,7 @@ form .field[data-error] input
 {
 	outline-color: var(--red);
 }
-form .field[data-error=""] input
+form .field[data-error="null"] input
 {
 	outline-color: #369EFF;
 }
