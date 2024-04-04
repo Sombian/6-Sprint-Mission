@@ -58,7 +58,7 @@ for (const field of document.querySelectorAll("form .field"))
 		continue;
 	}
 	//
-	// add input validation
+	// add input validations
 	//
 	input.validators = [
 		(event) =>
@@ -124,8 +124,7 @@ for (const field of document.querySelectorAll("form .field"))
 	}
 
 	input.addEventListener("blur", handler);
-	input.addEventListener("keyup", handler);
-	input.addEventListener("change", handler);
+	input.addEventListener("input", handler);
 }
 //
 // [!] SECURITY BREACH
