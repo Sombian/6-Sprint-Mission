@@ -12,9 +12,9 @@ const selector = new Map([
 function validate(input)
 {
 	const message = input["message"]();
-
+	// display error
 	input.closest(".wrapper").dataset["error"] = message ?? "null";
-
+	// toggle button
 	selector.get("button").disabled = !(!message && ![...inputs.values()].find((element, index, array) => element === input ? message : element["message"]()));
 }
 
@@ -93,7 +93,7 @@ for (const input of inputs)
 			},
 			(input) =>
 			{
-				if (!new RegExp(input.pattern).test(input.value))
+				if (input.has(input.pattern) && !new RegExp(input.pattern).test(input.value))
 				{
 					return `잘못된 ${input.alt} 형식입니다.`;
 				}
@@ -146,7 +146,7 @@ for (const input of inputs)
 //
 // SECURITY BREACH
 //
-function santuary()
+function sanctuary()
 {
 	for (const input of inputs)
 	{
@@ -160,4 +160,4 @@ function santuary()
 	}
 }
 
-export { validate, santuary };
+export { validate, sanctuary };

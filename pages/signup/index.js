@@ -1,4 +1,4 @@
-import { validate, santuary } from "/pages/login/index.js";
+import { validate, sanctuary } from "/pages/login/index.js";
 
 const [new_password, confirm_password] = [document.querySelector("#new-password"), document.querySelector("#confirm-password")];
 
@@ -37,4 +37,4 @@ confirm_password["validators"] = () =>
 	];
 };
 
-export { santuary };
+export { sanctuary };
