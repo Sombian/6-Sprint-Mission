@@ -93,7 +93,7 @@ for (const input of inputs)
 			},
 			(input) =>
 			{
-				if (input.has(input.pattern) && !new RegExp(input.pattern).test(input.value))
+				if (input.hasAttribute(input.pattern) && !new RegExp(input.pattern).test(input.value))
 				{
 					return `잘못된 ${input.alt} 형식입니다.`;
 				}
