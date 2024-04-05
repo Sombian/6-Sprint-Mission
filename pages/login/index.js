@@ -1,12 +1,30 @@
 import {} from "/common/index.js";
 
-const [state, form, button] = [new Map(), document.querySelector("form"), document.querySelector("form button")];
+const inputs = new Set(
+	document.querySelectorAll("input")
+);
 
-button.addEventListener("click", (event) =>
+const selector = new Map([
+	["form", document.querySelector("form")],
+	["button", document.querySelector("form button")],
+]);
+
+function validate(input)
 {
-	for (const input of form.querySelectorAll("input"))
+	selector.get("button").disabled = true;
+
+	const message = input["message"]();
+
+	input.closest(".wrapper").dataset["error"] = message ?? "null";
+	
+	selector.get("button").disabled = !(!message && ![...inputs.values()].find((element, index, array) => element === input ? message : element["message"]()));
+}
+
+selector.get("button").addEventListener("click", (event) =>
+{
+	for (const input of inputs)
 	{
-		if (input["validity"] === "invalid")
+		if (input["message"]())
 		{
 			return;
 		}
@@ -14,9 +32,8 @@ button.addEventListener("click", (event) =>
 	location.href = event.target.dataset.href;
 });
 
-for (const wrapper of form.querySelectorAll(".wrapper"))
+for (const input of inputs)
 {
-	const input = wrapper.querySelector("input");
 	//
 	// add password visibility toggle button to input
 	//
@@ -49,126 +66,100 @@ for (const wrapper of form.querySelectorAll(".wrapper"))
 		// apply src
 		img.src = srcs[input.type];
 		// insert toggle button
-		wrapper.append(img);
-	}
-	//
-	// UUID collision check
-	//
-	let UUID;
-
-	while (state.has(UUID = crypto.randomUUID()))
-	{
-		continue;
+		input.closest(".wrapper").append(img);
 	}
 	//
 	// add input validations
 	//
-	input["validators"] = [
-		(event) =>
-		{
-			if (event.target.value.isEmpty)
-			{
-				return event.target.placeholder;
-			}
-		},
-		(event) =>
-		{
-			if (!new RegExp(input.pattern).test(input.value))
-			{
-				return `잘못된 ${event.target.alt} 형식입니다.`;
-			}
-		},
-		(event) =>
-		{
-			if (event.target.hasAttribute("minlength") && event.target.value.length < event.target.minLength)
-			{
-				return `${한글.을를(event.target.alt)} ${event.target.minLength}자 이상 입력해주세요.`;
-			}
-		},
-		(event) =>
-		{
-			if (event.target.hasAttribute("maxlength") && event.target.maxLength < event.target.value.length)
-			{
-				return `${한글.을를(event.target.alt)} ${event.target.minLength}자 이하 입력해주세요.`;
-			}
-		}
-	];
-	// default state
-	state.set(UUID, new Array(input["validators"].length).fill("null"));
-
-	Object.defineProperty(input, "validity",
+	input["message"] = () =>
 	{
-		get()
+		for (const validator of input["validators"]())
 		{
-			return state.get(UUID).filter((element, index, array) => typeof element === "string").isEmpty ? "valid" : "invalid"; // probably can use boolean/enum instead of hard-coded string
-		}
-	});
-	Object.defineProperty(input, "validate",
-	{
-		value(event)
-		{
-			// disable
-			button.disabled = true;
-	
-			for (const [index, validator] of Object.entries(input["validators"]))
-			{
-				if (state.get(UUID)[index] = validator(event))
-				{
-					// update error message
-					return wrapper.dataset["error"] = state.get(UUID)[index];
-				}
-			}
-			// clear error message
-			wrapper.dataset["error"] = "null";
-	
-			for (const input of form.querySelectorAll("input"))
-			{
-				if (this === input)
-				{
-					continue;
-				}
-				if (input["validity"] === "invalid")
-				{
-					return;
-				}
-			}
-			// enable
-			button.disabled = false;
-		}
-	});
+			const message = validator(input);
 
+			if (message)
+			{
+				return message;
+			}
+		}
+	};
+	input["validators"] = () =>
+	{
+		return [
+			(input) =>
+			{
+				if (input.value.isEmpty)
+				{
+					return input.placeholder;
+				}
+			},
+			(input) =>
+			{
+				if (!new RegExp(input.pattern).test(input.value))
+				{
+					return `잘못된 ${input.alt} 형식입니다.`;
+				}
+			},
+			(input) =>
+			{
+				if (input.hasAttribute("minlength") && input.value.length < input.minLength)
+				{
+					return `${한글.을를(input.alt)} ${input.minLength}자 이상 입력해주세요.`;
+				}
+			},
+			(input) =>
+			{
+				if (input.hasAttribute("maxlength") && input.maxLength < input.value.length)
+				{
+					return `${한글.을를(input.alt)} ${input.minLength}자 이하 입력해주세요.`;
+				}
+			}
+		];
+	};
+	
 	input.addEventListener("blur", (event) =>
 	{
-		event.target["validate"](event);
+		validate(event.target);
 	});
 	input.addEventListener("input", (event) =>
 	{
-		event.target["validate"](event);
+		validate(event.target);
 	});
 }
 //
-// [!] SECURITY BREACH
+// SECURITY BREACH
 //
 (new MutationObserver((records, observer) =>
 {
 	for (const record of records)
 	{
-		if (0 < record.removedNodes.length && form.querySelectorAll("input").length < state.size)
+		if (0 < record.removedNodes.length)
 		{
-			window.location.reload();
+			for (const input of inputs)
+			{
+				if (!selector.get("form").contains(input))
+				{
+					return window.location.reload();
+				}
+			}
 		}
 	}
-})).observe(form, { subtree: true, childList: true });
-
+})).observe(selector.get("form"), { subtree: true, childList: true });
+//
+// SECURITY BREACH
+//
 function santuary()
 {
-	for (const input of form.querySelectorAll("input"))
+	for (const input of inputs)
 	{
-		Object.defineProperty(input, "validators",
+		for (const key of ["message", "validators"])
 		{
-			value: Object.freeze(input["validators"]), writable: false, configurable: false,
-		});
+			Object.defineProperty(input, key,
+			{
+				value: Object.freeze(input[key]), writable: false, configurable: false,
+			});
+		}
 	}
 }
 
-export { santuary };
+export { validate, santuary };
