@@ -11,12 +11,10 @@ const selector = new Map([
 
 function validate(input)
 {
-	selector.get("button").disabled = true;
-
 	const message = input["message"]();
 
 	input.closest(".wrapper").dataset["error"] = message ?? "null";
-	
+
 	selector.get("button").disabled = !(!message && ![...inputs.values()].find((element, index, array) => element === input ? message : element["message"]()));
 }
 
