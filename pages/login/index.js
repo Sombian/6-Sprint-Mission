@@ -4,9 +4,9 @@ const [state, form, button] = [new Map(), document.querySelector("form"), docume
 
 button.addEventListener("click", (event) =>
 {
-	for (const errors of state.values())
+	for (const input of form.querySelectorAll("input"))
 	{
-		if (errors.filter((element, index, array) => typeof element === "string").isNotEmpty)
+		if (input["validity"] === "invalid")
 		{
 			return;
 		}
@@ -68,7 +68,7 @@ for (const wrapper of form.querySelectorAll(".wrapper"))
 		{
 			if (event.target.value.isEmpty)
 			{
-				return `${한글.을를(event.target.alt)} 입력해주세요.`;
+				return event.target.placeholder;
 			}
 		},
 		(event) =>
@@ -95,36 +95,56 @@ for (const wrapper of form.querySelectorAll(".wrapper"))
 	];
 	// default state
 	state.set(UUID, new Array(input["validators"].length).fill("null"));
-	
-	function handler(event)
+
+	Object.defineProperty(input, "validity",
 	{
-		// disable
-		button.disabled = true;
-
-		for (const [index, validator] of Object.entries(input["validators"]))
+		get()
 		{
-			if (state.get(UUID)[index] = validator(event))
-			{
-				// update error message
-				return wrapper.dataset["error"] = state.get(UUID)[index];
-			}
+			return state.get(UUID).filter((element, index, array) => typeof element === "string").isEmpty ? "valid" : "invalid"; // probably can use boolean/enum instead of hard-coded string
 		}
-		// clear error message
-		wrapper.dataset["error"] = "null";
-
-		for (const errors of state.values())
+	});
+	Object.defineProperty(input, "validate",
+	{
+		value(event)
 		{
-			if (errors.filter((element, index, array) => typeof element === "string").isNotEmpty)
+			// disable
+			button.disabled = true;
+	
+			for (const [index, validator] of Object.entries(input["validators"]))
 			{
-				return;
+				if (state.get(UUID)[index] = validator(event))
+				{
+					// update error message
+					return wrapper.dataset["error"] = state.get(UUID)[index];
+				}
 			}
+			// clear error message
+			wrapper.dataset["error"] = "null";
+	
+			for (const input of form.querySelectorAll("input"))
+			{
+				if (this === input)
+				{
+					continue;
+				}
+				if (input["validity"] === "invalid")
+				{
+					return;
+				}
+			}
+			// enable
+			button.disabled = false;
 		}
-		// enable
-		button.disabled = false;
-	}
+	});
 
-	input.addEventListener("blur", handler);
-	input.addEventListener("input", handler);
+	input.addEventListener("blur", (event) =>
+	{
+		event.target["validate"](event);
+	});
+	input.addEventListener("input", (event) =>
+	{
+		event.target["validate"](event);
+	});
 }
 //
 // [!] SECURITY BREACH
