@@ -1,40 +1,39 @@
-import { validate, sanctuary } from "/pages/login/index.js";
+import { validators, message, validate } from "/pages/login/index.js";
 
-const [new_password, confirm_password] = [document.querySelector("#new-password"), document.querySelector("#confirm-password")];
+const selectors = {
+	"#new_password": document.querySelector("#new-password"),
+	"#cofirm_password": document.querySelector("#confirm-password"),
+};
 
-new_password.addEventListener("input", (event) =>
+selectors["#new_password"].addEventListener("input", (event) =>
 {
-	if (confirm_password.value.isNotEmpty)
+	if (selectors["#cofirm_password"].value.isNotEmpty)
 	{
-		validate(confirm_password);
+		validate(selectors["#cofirm_password"]);
 	}
 });
 
-confirm_password["validators"] = () => 
-{
-	return [
-		(input) =>
+validators.set(selectors["#cofirm_password"].dataset["id"],
+[
+	(input) =>
+	{
+		if (input.value.isEmpty)
 		{
-			if (input.value.isEmpty)
-			{
-				return input.placeholder;
-			}
-		},
-		(input) =>
-		{
-			if (new_password["message"]())
-			{
-				return "비밀번호를 확인해 주세요.";
-			}
-		},
-		(input) =>
-		{
-			if (new_password.value !== confirm_password.value)
-			{
-				return "비밀번호가 일치하지 않습니다.";
-			}
+			return input.placeholder;
 		}
-	];
-};
-
-export { sanctuary };
+	},
+	(input) =>
+	{
+		if (message(selectors["#new_password"]))
+		{
+			return "비밀번호를 확인해 주세요.";
+		}
+	},
+	(input) =>
+	{
+		if (selectors["#new_password"].value !== selectors["#cofirm_password"].value)
+		{
+			return "비밀번호가 일치하지 않습니다.";
+		}
+	}
+]);

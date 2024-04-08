@@ -1,36 +1,57 @@
-import {} from "/common/index.js";
+import "/common/index.js";
+import 한글 from "/common/utilities/한글.js";
 
-const inputs = new Set(
-	document.querySelectorAll("input")
-);
+const [validators, selectors] = [new Map(),
+{
+	"form": document.querySelector("form"),
+	"button": document.querySelector("form button"),
+}];
 
-const selector = new Map([
-	["form", document.querySelector("form")],
-	["button", document.querySelector("form button")],
-]);
+function safe()
+{
+	for (const UUID of validators.keys())
+	{
+		const input = document.querySelector(`input[data-id="${UUID}"]`);
+		// input is gone... how?
+		if (!input) return false;
+		// validation pass failed
+		if (message(input)) return false;
+	}
+	return true;
+}
+
+function message(input)
+{
+	const UUID = input.dataset["id"];
+
+	if (!validators.has(UUID))
+	{
+		return "error";
+	}
+	for (const validator of validators.get(UUID))
+	{
+		const msg = validator(input); if (msg) return msg;
+	}
+}
 
 function validate(input)
 {
-	const message = input["message"]();
+	const msg = message(input);
 	// display error
-	input.closest(".wrapper").dataset["error"] = message ?? "null";
+	input.closest(".wrapper").dataset["error"] = msg ?? "null";
 	// toggle button
-	selector.get("button").disabled = !(!message && ![...inputs.values()].find((element, index, array) => element === input ? message : element["message"]()));
+	selectors["button"].disabled = !safe();
 }
 
-selector.get("button").addEventListener("click", (event) =>
+selectors["button"].addEventListener("click", (event) =>
 {
-	for (const input of inputs)
+	if (safe())
 	{
-		if (input["message"]())
-		{
-			return;
-		}
+		location.href = event.target.dataset.href;
 	}
-	location.href = event.target.dataset.href;
 });
 
-for (const input of inputs)
+for (const input of document.querySelectorAll("input"))
 {
 	//
 	// add password visibility toggle button to input
@@ -67,53 +88,72 @@ for (const input of inputs)
 		input.closest(".wrapper").append(img);
 	}
 	//
+	// set input UUID
+	//
+	let UUID;
+
+	while (validators.has(UUID = crypto.randomUUID()))
+	{
+		continue;
+	}
+	Object.defineProperty(input.dataset, "id", { value: UUID });
+	//
 	// add input validations
 	//
-	input["message"] = () =>
+	validators.set(UUID, (() =>
 	{
-		for (const validator of input["validators"]())
-		{
-			const message = validator(input);
+		const tests = [];
 
-			if (message)
-			{
-				return message;
-			}
+		if (input.hasAttribute("placeholder"))
+		{
+			tests.push(
+				(input) =>
+				{
+					if (input.value.isEmpty)
+					{
+						return input.placeholder;
+					}
+				}
+			);
 		}
-	};
-	input["validators"] = () =>
-	{
-		return [
-			(input) =>
-			{
-				if (input.value.isEmpty)
+		if (input.hasAttribute("pattern"))
+		{
+			tests.push(
+				(input) =>
 				{
-					return input.placeholder;
+					if (!new RegExp(input.pattern).test(input.value))
+					{
+						return `잘못된 ${input.alt} 형식입니다.`;
+					}
 				}
-			},
-			(input) =>
-			{
-				if (!new RegExp(input.pattern).test(input.value))
+			);
+		}
+		if (input.hasAttribute("minlength"))
+		{
+			tests.push(
+				(input) =>
 				{
-					return `잘못된 ${input.alt} 형식입니다.`;
+					if (input.value.length < input.minLength)
+					{
+						return `${한글["을/를"](input.alt)} ${input.minLength}자 이상 입력해주세요.`;
+					}
 				}
-			},
-			(input) =>
-			{
-				if (input.hasAttribute("minlength") && input.value.length < input.minLength)
+			);
+		}
+		if (input.hasAttribute("maxlength"))
+		{
+			tests.push(
+				(input) =>
 				{
-					return `${한글.을를(input.alt)} ${input.minLength}자 이상 입력해주세요.`;
+					if (input.maxLength < input.value.length)
+					{
+						return `${한글["을/를"](input.alt)} ${input.minLength}자 이하 입력해주세요.`;
+					}
 				}
-			},
-			(input) =>
-			{
-				if (input.hasAttribute("maxlength") && input.maxLength < input.value.length)
-				{
-					return `${한글.을를(input.alt)} ${input.minLength}자 이하 입력해주세요.`;
-				}
-			}
-		];
-	};
+			);
+		}
+		return tests;
+	})());
 	
 	input.addEventListener("blur", (event) =>
 	{
@@ -124,40 +164,5 @@ for (const input of inputs)
 		validate(event.target);
 	});
 }
-//
-// SECURITY BREACH
-//
-(new MutationObserver((records, observer) =>
-{
-	for (const record of records)
-	{
-		if (0 < record.removedNodes.length)
-		{
-			for (const input of inputs)
-			{
-				if (!selector.get("form").contains(input))
-				{
-					return window.location.reload();
-				}
-			}
-		}
-	}
-})).observe(selector.get("form"), { subtree: true, childList: true });
-//
-// SECURITY BREACH
-//
-function sanctuary()
-{
-	for (const input of inputs)
-	{
-		for (const key of ["message", "validators"])
-		{
-			Object.defineProperty(input, key,
-			{
-				value: Object.freeze(input[key]), writable: false, configurable: false,
-			});
-		}
-	}
-}
 
-export { validate, sanctuary };
+export { validators, message, validate }
