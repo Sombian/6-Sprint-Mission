@@ -1,0 +1,22 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css");
+
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+:root
+{
+	font-family: Pretendard;
+}
+
+@layer components
+{
+	.button
+	{
+		@apply flex items-center justify-center text-[#FFFFFF] bg-[#3692FF] h-full mobile:w-[88px] tablet:w-[128px] desktop:w-[128px] hover:bg-[#1967D6] focus:bg-[#1251AA] disabled:bg-[#9CA3AF];
+	}
+	.layout
+	{
+		@apply flex flex-col items-center [&>*]:w-full [&>*]:mobile:px-[16px] [&>*]:tablet:mx-[24px] [&>*]:desktop:mx-[24px] [&>*]:desktop:container;
+	}
+}
