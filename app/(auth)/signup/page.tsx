@@ -13,7 +13,7 @@ export default function Page()
 						id: "이메일", type: "email", pattern: /[^@\s]+@[^@\s]+\.[^@\s]+/, placeholder: "이메일을 입력해주세요", autocomplete: "email",
 					},
 					{
-						id: "닉네임", type: "text", minlength: 2, maxlength: 8, pattern: /^[a-zA-Z][a-zA-Z0-9_]*$/, placeholder: "이메일을 입력해주세요",
+						id: "닉네임", type: "text", minlength: 2, maxlength: 8, pattern: /^[a-zA-Z][a-zA-Z0-9_]*$/, placeholder: "닉네임을 입력해주세요",
 					},
 					{
 						id: "비밀번호", type: "password", minlength: 8, maxlength: 16, placeholder: "비밀번호를 입력해주세요", autocomplete: "new-password",
