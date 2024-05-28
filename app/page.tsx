@@ -13,7 +13,7 @@ export default function Page()
 	const { is_mobile, is_tablet, is_desktop } = useViewport();
 
 	return (
-		<main class="flex flex-col h-screen overflow-auto">
+		<main class="flex flex-col h-screen overflow-x-hidden">
 			<Header>
 			{[
 				// TODO: none
@@ -22,7 +22,7 @@ export default function Page()
 			{/* content */}
 			<div class="grow">
 				{/* banner */}
-				<figure class="layout bg-[#CFE5FF]">
+				<div class="constraint bg-[#CFE5FF]">
 					<div class="flex flex-col relative mobile:items-center tablet:items-center desktop:items-start desktop:justify-center desktop:container desktop:h-[540px]">
 						<div class="font-[700] mobile:mt-[50px] mobile:text-[32px] mobile:text-center tablet:mt-[85px] tablet:text-[40px] tablet:text-center desktop:mt-[30px] desktop:text-[40px]">
 							일상의 모든 물건을
@@ -36,11 +36,11 @@ export default function Page()
 						</Link>
 						<Image src="/images/banner_01.png" alt="banner" width={1000} height={500} class="mobile:max-w-[630px] mobile:mt-[55px] tablet:max-w-[1000px] tablet:mt-[100px] desktop:absolute desktop:left-[360px] desktop:bottom-0"/>
 					</div>
-				</figure>
+				</div>
 				{/* content */}
-				<article class="layout mobile:gap-[64px] mobile:mt-[50px] mobile:mb-[64px] tablet:gap-[64px] tablet:mt-[24px] tablet:mb-[80px] desktop:gap-[275px] desktop:mt-[140px] desktop:mb-[280px]">
+				<div class="constraint mobile:gap-[64px] mobile:mt-[50px] mobile:mb-[64px] tablet:gap-[64px] tablet:mt-[24px] tablet:mb-[80px] desktop:gap-[275px] desktop:mt-[140px] desktop:mb-[280px]">
 					{/* segment */}
-					<section class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
 						<Image src="/images/home_01.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -57,9 +57,9 @@ export default function Page()
 								판다 마켓에서 확인해 보세요
 							</div>
 						</div>
-					</section>
+					</div>
 					{/* segment */}
-					<section class="flex flex-row-reverse text-right mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row-reverse text-right mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
 						<Image src="/images/home_02.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -76,9 +76,9 @@ export default function Page()
 								쉽게 찾아보세요
 							</div>
 						</div>
-					</section>
+					</div>
 					{/* segment */}
-					<section class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
 						<Image src="/images/home_03.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -95,10 +95,10 @@ export default function Page()
 								쉽게 등록하세요
 							</div>
 						</div>
-					</section>
-				</article>
+					</div>
+				</div>
 				{/* banner */}
-				<figure class="layout bg-[#CFE5FF]">
+				<div class="constraint bg-[#CFE5FF]">
 					<div class="flex flex-col relative mobile:items-center tablet:items-center desktop:items-start desktop:justify-center desktop:container desktop:h-[540px]">
 						<div class="font-[700] mobile:mt-[120px] mobile:text-[32px] mobile:text-center tablet:mt-[200px] tablet:text-[40px] tablet:text-center desktop:text-[40px]">
 							믿을 수 있는
@@ -107,7 +107,7 @@ export default function Page()
 						</div>
 						<Image src="/images/banner_02.png" alt="banner" width={1000} height={560} class="mobile:max-w-[500px] mobile:mt-[60px] tablet:max-w-[1000px] tablet:mt-[75px] desktop:absolute desktop:left-[360px] desktop:bottom-0"/>
 					</div>
-				</figure>
+				</div>
 				<Footer>
 				{[
 					{

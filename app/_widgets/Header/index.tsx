@@ -10,7 +10,7 @@ export default function Header({ children }: Readonly<{ children: { name: string
 	const pathname = usePathname();
 
 	return (
-		<header class="flex sticky top-0 z-10 bg-[#FFFFFF]">
+		<header class="flex sticky top-0 z-10 bg-[#FFFFFF] border-b border-b-[#DFDFDF]">
 			<div class="flex justify-between w-full h-[70px] py-[10px] mobile:mx-[16px] tablet:mx-[24px] desktop:mx-[200px]">
 				{/* company */}
 				<Link href="/">
@@ -34,7 +34,7 @@ export default function Header({ children }: Readonly<{ children: { name: string
 				</div>
 				{/* signin */}
 				<Link href="/signin">
-					<div class="button font-[500] rounded-[8px]">
+					<div class="button font-[500] rounded-[8px] h-full mobile:w-[88px] tablet:w-[128px] desktop:w-[128px]">
 						로그인
 					</div>
 				</Link>

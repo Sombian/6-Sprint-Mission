@@ -3,7 +3,7 @@ import Header from "@/app/_widgets/Header";
 export default function Layout({ children }: Readonly<{ children: React.ReactNode; }>)
 {
 	return (
-		<main class="flex flex-col h-screen">
+		<main class="flex flex-col h-screen overflow-x-hidden">
 			<Header>
 			{[
 				{
