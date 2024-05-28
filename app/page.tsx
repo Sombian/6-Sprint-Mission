@@ -13,7 +13,7 @@ export default function Page()
 	const { is_mobile, is_tablet, is_desktop } = useViewport();
 
 	return (
-		<main class="flex flex-col h-screen">
+		<main class="flex flex-col h-screen overflow-auto">
 			<Header>
 			{[
 				// TODO: none
