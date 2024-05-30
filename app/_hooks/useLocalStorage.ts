@@ -25,7 +25,7 @@ export default function useLocalStorage<T>(key: string, fallback: T)
 			window.removeEventListener("local-storage", listener);
 		};
 	},
-	[key]);
+	[key, fallback]);
 
 	function setter(value: T | ((value: T) => T))
 	{

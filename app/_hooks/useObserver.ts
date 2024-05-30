@@ -25,5 +25,5 @@ export default function useObserver(ref: React.RefObject<HTMLElement>, ratio: nu
 			return () => observer.disconnect();
 		}
 	},
-	[ref, ...dependencies]);
+	[ref, callback, ratio, ...dependencies]);
 }
