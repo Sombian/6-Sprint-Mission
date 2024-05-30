@@ -86,7 +86,17 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 		input.setCustomValidity(message);
 	},
 	[onCheck, getValues, getCauses]);
+	//
+	// useful macro 4th
+	//
+	const verify = useCallback((name: string) =>
+	{
+		// @ts-ignore
+		validate(form.current, form.current.elements[name]);
+	},
+	[validate]);
 
+	
 	useEffect(() =>
 	{
 		// buffer
@@ -188,13 +198,6 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 		return set_disabled(false);
 	},
 	[checks]);
-
-	const verify = useCallback((name: string) =>
-	{
-		// @ts-ignore
-		validate(form.current, form.current.elements[name] as HTMLInputElement);
-	},
-	[validate]);
 
 	return { errors, verify, disabled };
 }

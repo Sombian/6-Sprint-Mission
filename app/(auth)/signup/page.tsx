@@ -43,10 +43,16 @@ export default function Page()
 					{
 						errors[input.name] = `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
 					}
+					else
+					{
+						errors[input.name] = "";
+					}
 					//
 					// sync
 					//
-					return verify("비밀번호 확인") as undefined;
+					verify("비밀번호 확인");
+
+					return errors[input.name].length ? errors[input.name] : null;
 				}
 				break;
 			}
