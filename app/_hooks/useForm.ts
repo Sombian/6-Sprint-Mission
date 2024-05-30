@@ -16,12 +16,12 @@ export const enum Trigger
 	SUBMIT,
 }
 
-export default function useForm(id: string, onSubmit: (data: FormData) => void, onCheck: (input: HTMLInputElement, values: Record<string, string>, causes: Set<Cause>) => Nullish<string>, triggers: Trigger[])
+export default function useForm(id: string, onSubmit: (data: FormData) => void, onCheck: (input: HTMLInputElement, values: Record<string, string>, causes: Set<Cause>) => Nullable<string>, triggers: Trigger[])
 {
 	const form = useRef<Nullable<HTMLFormElement>>(null);
 
-	const [errors, set_errors] = useState<Record<string, string>>({});
 	const [checks, set_checks] = useState<Record<string, boolean>>({});
+	const [errors, set_errors] = useState<Record<string, Nullable<string>>>({});
 
 	const [disabled, set_disabled] = useState(true);
 	//
@@ -49,17 +49,21 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 		{
 			causes.add(Cause.REQUIRED);
 		}
-		if (input.minLength && input.value.length < input.minLength)
+		// if (input.required || (!input.required && 0 < input.value.length)) -> if (input.required || 0 < input.value.length) -> else
+		else
 		{
-			causes.add(Cause.MINLENGTH);
-		}
-		if (0 < input.maxLength && input.maxLength < input.value.length)
-		{
-			causes.add(Cause.MAXLENGTH);
-		}
-		if (input.pattern && !new RegExp(input.pattern).test(input.value))
-		{
-			causes.add(Cause.PATTERN);
+			if (input.minLength && input.value.length < input.minLength)
+			{
+				causes.add(Cause.MINLENGTH);
+			}
+			if (0 < input.maxLength && input.maxLength < input.value.length)
+			{
+				causes.add(Cause.MAXLENGTH);
+			}
+			if (input.pattern && !new RegExp(input.pattern).test(input.value))
+			{
+				causes.add(Cause.PATTERN);
+			}
 		}
 		return causes;
 	},
@@ -70,7 +74,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 	const validate = useCallback((form: HTMLFormElement, input: HTMLInputElement) =>
 	{
 		// cache
-		const message = onCheck(input, getValues(form), getCauses(input)) ?? "";
+		const message = onCheck(input, getValues(form), getCauses(input));
 
 		set_errors((errors) =>
 		{
@@ -83,7 +87,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 		//
 		// (QoL) :valid & :invalid selector
 		//
-		input.setCustomValidity(message);
+		input.setCustomValidity(message ?? "");
 	},
 	[onCheck, getValues, getCauses]);
 	//
@@ -108,7 +112,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 
 		for (const input of form.current.querySelectorAll<HTMLInputElement>("input[name]"))
 		{
-			_errors[input.name] = ""; _checks[input.name] = !input.required;
+			_errors[input.name] = null; _checks[input.name] = !input.required;
 		}
 		//
 		// default value

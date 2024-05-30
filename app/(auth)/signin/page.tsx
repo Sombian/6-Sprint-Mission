@@ -34,6 +34,7 @@ export default function Page()
 		{
 			return `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
 		}
+		return null;
 	},
 	// triggers
 	[Trigger.BLUR, Trigger.INPUT]);

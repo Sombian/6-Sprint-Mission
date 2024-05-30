@@ -45,14 +45,14 @@ export default function Page()
 					}
 					else
 					{
-						errors[input.name] = "";
+						errors[input.name] = null;
 					}
 					//
 					// sync
 					//
 					verify("비밀번호 확인");
 
-					return errors[input.name].length ? errors[input.name] : null;
+					return errors[input.name] ? errors[input.name] : null;
 				}
 				break;
 			}
@@ -85,6 +85,7 @@ export default function Page()
 		{
 			return `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
 		}
+		return null;
 	},
 	// triggers
 	[Trigger.BLUR, Trigger.INPUT]);
