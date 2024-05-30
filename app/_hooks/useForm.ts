@@ -31,9 +31,9 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 	{
 		const values: Record<string, string> = {};
 
-		for (const [key, value] of new FormData(form.current).entries())
+		for (const [key, value] of new FormData(form).entries())
 		{
-			values[key] = typeof value === "string" ? value : "<file>";
+			values[key] = typeof value === "string" ? value : "#FILE";
 		}
 		return values;
 	},
@@ -64,6 +64,28 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 		return causes;
 	},
 	[]);
+	//
+	// useful macro 3rd
+	//
+	const validate = useCallback((form: HTMLFormElement, input: HTMLInputElement) =>
+	{
+		// cache
+		const message = onCheck(input, getValues(form), getCauses(input)) ?? "";
+
+		set_errors((errors) =>
+		{
+			return errors[input.name] === message ? errors :  { ...errors, [input.name]: message };
+		});
+		set_checks((checks) =>
+		{
+			return checks[input.name] === !message ? checks : { ...checks, [input.name]: !message };
+		});
+		//
+		// (QoL) :valid & :invalid selector
+		//
+		input.setCustomValidity(message);
+	},
+	[onCheck, getValues, getCauses]);
 
 	useEffect(() =>
 	{
@@ -90,24 +112,6 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 	{
 		if (form.current)
 		{
-			function validator(form: HTMLFormElement, input: HTMLInputElement)
-			{
-				// cache
-				const message = onCheck(input, getValues(form), getCauses(input)) ?? "";
-
-				set_errors((errors) =>
-				{
-					return errors[input.name] === message ? errors :  { ...errors, [input.name]: message };
-				});
-				set_checks((checks) =>
-				{
-					return checks[input.name] === !message ? checks : { ...checks, [input.name]: !message };
-				});
-				//
-				// (QoL) :valid & :invalid selector
-				//
-				input.setCustomValidity(message);
-			}
 			//
 			// capture
 			//
@@ -121,7 +125,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 					{
 						for (const input of target.querySelectorAll<HTMLInputElement>("input[name]"))
 						{
-							input.onblur = (event) => validator(target, input);
+							input.onblur = (event) => validate(target, input);
 						}
 						break;
 					}
@@ -129,7 +133,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 					{
 						for (const input of target.querySelectorAll<HTMLInputElement>("input[name]"))
 						{
-							input.onfocus = (event) => validator(target, input);
+							input.onfocus = (event) => validate(target, input);
 						}
 						break;
 					}
@@ -137,7 +141,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 					{
 						for (const input of target.querySelectorAll<HTMLInputElement>("input[name]"))
 						{
-							input.oninput = (event) => validator(target, input);
+							input.oninput = (event) => validate(target, input);
 						}
 						break;
 					}
@@ -153,7 +157,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 				{
 					for (const input of target.querySelectorAll<HTMLInputElement>("input[name]"))
 					{
-						validator(target, input);
+						validate(target, input);
 					}
 				}
 				//
@@ -170,7 +174,7 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 			};
 		}
 	},
-	[form, disabled, onSubmit, onCheck, triggers, getValues, getCauses]);
+	[form, disabled, validate, onSubmit, triggers]);
 
 	useEffect(() =>
 	{
@@ -185,5 +189,12 @@ export default function useForm(id: string, onSubmit: (data: FormData) => void, 
 	},
 	[checks]);
 
-	return { errors, disabled };
+	const verify = useCallback((name: string) =>
+	{
+		// @ts-ignore
+		validate(form.current, form.current.elements[name] as HTMLInputElement);
+	},
+	[validate]);
+
+	return { errors, verify, disabled };
 }

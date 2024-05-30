@@ -9,7 +9,7 @@ import useForm, { Cause, Trigger } from "@/app/_hooks/useForm";
 
 export default function Page()
 {
-	const { errors, disabled } = useForm("signin",
+	const { errors, verify, disabled } = useForm("signin",
 	// onSubmit
 	(data) =>
 	{
@@ -57,19 +57,19 @@ export default function Page()
 								args.type === "password" && <Image src="/icons/invisible.svg" alt="visibility" width={24} height={24} onClick={(event) =>
 								{
 									const input = document.getElementById(args.id) as HTMLInputElement;
-
+									
 									switch (input.type)
 									{
 										case "text":
 										{
 											input.type = "password";
-											event.currentTarget.src = "/icons/visible.svg";
+											event.currentTarget.src = "/icons/invisible.svg";
 											break;
 										}
-										case "passsword":
+										case "password":
 										{
 											input.type = "text";
-											event.currentTarget.src = "/icons/invisible.svg";
+											event.currentTarget.src = "/icons/visible.svg";
 											break;
 										}
 									}

@@ -1,45 +1,133 @@
+"use client";
+
+import json from "./page.json";
+
 import Link from "next/link";
 import Image from "next/image";
 
+import useForm, { Cause, Trigger } from "@/app/_hooks/useForm";
+
 export default function Page()
 {
+	const { errors, verify, disabled } = useForm("signup",
+	// onSubmit
+	(data) =>
+	{
+		console.log(data);
+	},
+	// onCheck
+	(input, values, causes) =>
+	{
+		switch (input.name)
+		{
+			case "비밀번호":
+			{
+				if (values["비밀번호 확인"])
+				{
+					//
+					// anti-pattern
+					//
+					if (causes.has(Cause.REQUIRED))
+					{
+						errors[input.name] = `${input.name}을(를) 입력해주세요`;
+					}
+					else if (causes.has(Cause.PATTERN))
+					{
+						errors[input.name] = `올바른 ${input.name}을(를) 입력해주세요`;
+					}
+					else if (causes.has(Cause.MINLENGTH))
+					{
+						errors[input.name] = `${input.name}을(를) ${input.minLength}자 이상 입력해주세요`;
+					}
+					else if (causes.has(Cause.MAXLENGTH))
+					{
+						errors[input.name] = `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
+					}
+					//
+					// sync
+					//
+					return verify("비밀번호 확인") as undefined;
+				}
+				break;
+			}
+			case "비밀번호 확인":
+			{
+				if (errors["비밀번호"])
+				{
+					return "비밀번호를 확인해주세요";
+				}
+				if (values["비밀번호"] !== values["비밀번호 확인"])
+				{
+					return "비밀번호가 일치하지 않습니다";
+				}
+				break;
+			}
+		}
+		if (causes.has(Cause.REQUIRED))
+		{
+			return `${input.name}을(를) 입력해주세요`;
+		}
+		if (causes.has(Cause.PATTERN))
+		{
+			return `올바른 ${input.name}을(를) 입력해주세요`;
+		}
+		if (causes.has(Cause.MINLENGTH))
+		{
+			return `${input.name}을(를) ${input.minLength}자 이상 입력해주세요`;
+		}
+		if (causes.has(Cause.MAXLENGTH))
+		{
+			return `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
+		}
+	},
+	// triggers
+	[Trigger.BLUR, Trigger.INPUT]);
+
 	return (
 		<>
 			{/* form */}
-			<form class="flex flex-col">
+			<form id="signup" class="flex flex-col">
 				<div class="flex flex-col mobile:gap-[16px] tablet:gap-[16px] desktop:gap-[24px]">
-				{[
-					{
-						id: "이메일", type: "email", pattern: /[^@\s]+@[^@\s]+\.[^@\s]+/, placeholder: "이메일을 입력해주세요", autocomplete: "email",
-					},
-					{
-						id: "닉네임", type: "text", minlength: 2, maxlength: 8, pattern: /^[a-zA-Z][a-zA-Z0-9_]*$/, placeholder: "닉네임을 입력해주세요",
-					},
-					{
-						id: "비밀번호", type: "password", minlength: 8, maxlength: 16, placeholder: "비밀번호를 입력해주세요", autocomplete: "new-password",
-					},
-					{
-						id: "비밀번호 확인", type: "password", minlength: 8, maxlength: 16, placeholder: "비밀번호를 다시 한번 입력해주세요", autocomplete: "new-password",
-					},
-				]
-				.map((args, index) =>
+				{json.map((args, index) =>
 				(
-					<div key={index} class="flex flex-col mobile:gap-[8px] tablet:gap-[8px] desktop:gap-[16px]">
+					<div key={index} class="group flex flex-col mobile:gap-[8px] tablet:gap-[8px] desktop:gap-[16px]">
 						<label htmlFor={args.id} class="text-[#1F2937] font-[700] mobile:text-[14px] tablet:text-[18px] desktop:text-[18px]">
 						{
 							args.id
 						}
 						</label>
-						<div class="flex h-[56px] px-[24px] bg-[#F3F4F6] rounded-[12px]">
-							<input id={args.id} type={args.type} pattern={args.pattern?.toString()} minLength={args.minlength} maxLength={args.maxlength} placeholder={args.placeholder} autoComplete={args.autocomplete} class="grow text-[#1F2937] text-[16px] font-[400] outline-none bg-transparent placeholder:text-[#9CA3AF]"/>
+						<div class="flex h-[56px] px-[24px] bg-[#F3F4F6] rounded-[12px] border group-has-[:valid]:border-[#3692FF] group-has-[.error]:border-[#F74747]">
+							<input { ...args } name={args.id} class="grow text-[#1F2937] text-[16px] font-[400] outline-none bg-transparent placeholder:text-[#9CA3AF]"/>
 							{
-								args.type === "password" && <Image src="/icons/invisible.svg" alt="visibility" width={24} height={24}/>
+								args.type === "password" && <Image src="/icons/invisible.svg" alt="visibility" width={24} height={24} onClick={(event) =>
+								{
+									const input = document.getElementById(args.id) as HTMLInputElement;
+
+									switch (input.type)
+									{
+										case "text":
+										{
+											input.type = "password";
+											event.currentTarget.src = "/icons/invisible.svg";
+											break;
+										}
+										case "password":
+										{
+											input.type = "text";
+											event.currentTarget.src = "/icons/visible.svg";
+											break;
+										}
+									}
+								}}/>
 							}
 						</div>
+						{
+							errors[args.id] && <div class="error text-[#F74747] text-[15px] font-[600] group-[:not(:has(:invalid))]:hidden">{errors[args.id]}</div>
+						}
 					</div>
 				))}
 				</div>
-				<button class="button h-[56px] rounded-[40px] text-[16px] font-[600] mobile:mt-[16px] tablet:mt-[24px] desktop:mt-[24px]">
+				<button type="submit" disabled={disabled} class="button h-[56px] rounded-[40px] text-[16px] font-[600] mobile:mt-[16px] tablet:mt-[24px] desktop:mt-[24px]">
 					회원가입
 				</button>
 			</form>
