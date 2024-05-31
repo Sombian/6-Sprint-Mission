@@ -9,14 +9,18 @@
 	font-family: Pretendard;
 }
 
+@media (width < 1200px)
+{
+	main
+	{
+		scrollbar-width: none;
+	}
+}
+
 @layer components
 {
 	.button
 	{
 		@apply flex items-center justify-center text-[#FFFFFF] bg-[#3692FF] hover:bg-[#1967D6] focus:bg-[#1251AA] disabled:bg-[#9CA3AF];
-	}
-	.constraint
-	{
-		@apply flex flex-col items-center [&>*]:w-full [&>*]:mobile:px-[16px] [&>*]:tablet:px-[24px] [&>*]:desktop:px-[24px] [&>*]:desktop:container;
 	}
 }

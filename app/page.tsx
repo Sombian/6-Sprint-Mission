@@ -6,14 +6,14 @@ import Image from "next/image";
 import Header from "@/app/_widgets/Header";
 import Footer from "@/app/_widgets/Footer";
 
-import useViewport from "@/app/_hooks/useViewport";
+import useBreakPoint from "@/app/_hooks/useBreakPoint";
 
 export default function Page()
 {
-	const { is_mobile, is_tablet, is_desktop } = useViewport();
+	const { is_mobile, is_tablet, is_desktop } = useBreakPoint();
 
 	return (
-		<main class="flex flex-col h-screen overflow-x-hidden">
+		<main class="flex flex-col items-center h-screen overflow-x-hidden *:w-full">
 			<Header>
 			{[
 				// TODO: none
@@ -22,8 +22,8 @@ export default function Page()
 			{/* content */}
 			<div class="grow">
 				{/* banner */}
-				<div class="constraint bg-[#CFE5FF]">
-					<div class="flex flex-col relative mobile:items-center tablet:items-center desktop:items-start desktop:justify-center desktop:container desktop:h-[540px]">
+				<div class="flex flex-col items-center bg-[#CFE5FF]">
+					<div class="flex flex-col relative w-full mobile:items-center mobile:px-[16px] tablet:items-center tablet:px-[24px] desktop:items-start desktop:justify-center desktop:container desktop:box-content desktop:h-[540px] desktop:px-[24px]">
 						<div class="font-[700] mobile:mt-[50px] mobile:text-[32px] mobile:text-center tablet:mt-[85px] tablet:text-[40px] tablet:text-center desktop:mt-[30px] desktop:text-[40px]">
 							일상의 모든 물건을
 							{is_tablet ? "\u0020" : <br/>}
@@ -38,9 +38,9 @@ export default function Page()
 					</div>
 				</div>
 				{/* content */}
-				<div class="constraint mobile:gap-[64px] mobile:mt-[50px] mobile:mb-[64px] tablet:gap-[64px] tablet:mt-[24px] tablet:mb-[80px] desktop:gap-[275px] desktop:mt-[140px] desktop:mb-[280px]">
+				<div class="flex flex-col items-center mobile:gap-[64px] mobile:mt-[50px] mobile:mb-[64px] tablet:gap-[64px] tablet:mt-[24px] tablet:mb-[80px] desktop:gap-[275px] desktop:mt-[140px] desktop:mb-[280px]">
 					{/* segment */}
-					<div class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row text-left w-full mobile:flex-col mobile:items-start mobile:gap-[20px] mobile:px-[16px] tablet:flex-col tablet:items-start tablet:gap-[20px] tablet:px-[24px] tablet:max-w-[700px] desktop:px-[24px] desktop:gap-[64px] desktop:container desktop:box-content">
 						<Image src="/images/home_01.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -59,7 +59,7 @@ export default function Page()
 						</div>
 					</div>
 					{/* segment */}
-					<div class="flex flex-row-reverse text-right mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row-reverse text-right w-full mobile:flex-col mobile:items-end mobile:gap-[20px] mobile:px-[16px] tablet:flex-col tablet:items-end tablet:gap-[20px] tablet:px-[24px] tablet:max-w-[700px] desktop:px-[24px] desktop:gap-[64px] desktop:container desktop:box-content">
 						<Image src="/images/home_02.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -78,7 +78,7 @@ export default function Page()
 						</div>
 					</div>
 					{/* segment */}
-					<div class="flex flex-row text-left mobile:flex-col mobile:gap-[20px] tablet:flex-col tablet:gap-[20px] tablet:max-w-[700px] desktop:gap-[64px]">
+					<div class="flex flex-row text-left w-full mobile:flex-col mobile:items-start mobile:gap-[20px] mobile:px-[16px] tablet:flex-col tablet:items-start tablet:gap-[20px] tablet:px-[24px] tablet:max-w-[700px] desktop:px-[24px] desktop:gap-[64px] desktop:container desktop:box-content">
 						<Image src="/images/home_03.png" alt="segment" width={600} height={450}/>
 						<div class="flex flex-col justify-center">
 							<div class="text-[#3692FF] font-[700] mobile:text-[16px] tablet:text-[18px] desktop:text-[18px]">
@@ -98,8 +98,8 @@ export default function Page()
 					</div>
 				</div>
 				{/* banner */}
-				<div class="constraint bg-[#CFE5FF]">
-					<div class="flex flex-col relative mobile:items-center tablet:items-center desktop:items-start desktop:justify-center desktop:container desktop:h-[540px]">
+				<div class="flex flex-col items-center bg-[#CFE5FF]">
+					<div class="flex flex-col relative w-full mobile:items-center mobile:px-[16px] tablet:items-center tablet:px-[24px] desktop:items-start desktop:justify-center desktop:container desktop:box-content desktop:h-[540px] desktop:px-[24px]">
 						<div class="font-[700] mobile:mt-[120px] mobile:text-[32px] mobile:text-center tablet:mt-[200px] tablet:text-[40px] tablet:text-center desktop:text-[40px]">
 							믿을 수 있는
 							<br/>

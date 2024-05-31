@@ -47,7 +47,7 @@ export default function Page()
 				{json.map((args, index) =>
 				(
 					<div key={index} class="group flex flex-col mobile:gap-[8px] tablet:gap-[8px] desktop:gap-[16px]">
-						<label htmlFor={args.id} class="text-[#1F2937] font-[700] mobile:text-[14px] tablet:text-[18px] desktop:text-[18px]">
+						<label for={args.id} class="text-[#1F2937] font-[700] mobile:text-[14px] tablet:text-[18px] desktop:text-[18px]">
 						{
 							args.id
 						}

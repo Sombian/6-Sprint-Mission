@@ -1,9 +1,24 @@
 import "react";
 
+/** @see https://github.com/facebook/react/issues/13525 */
 declare module "react"
 {
-	interface HTMLAttributes<T>
+	interface LabelHTMLAttributes<HTMLLabelElement>
 	{
-		class?: string; // please STFU, camel case hurt my eyes
+		for?: string;
+	}
+	interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T>
+	{
+		class?: string;
 	}
 }
+
+declare global
+{
+	interface Props
+	{
+		id?: string; style?: React.CSSProperties; class?: string; children?: React.ReactNode;
+	}
+}
+
+export {};

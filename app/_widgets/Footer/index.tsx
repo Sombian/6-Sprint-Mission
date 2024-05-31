@@ -3,16 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function Footer({ children }: Readonly<{ children: { name: string; href: string; }[]; }>)
+export default function Footer(props: Readonly<{ children: { name: string; href: string; }[]; }>)
 {
 	return (
 		<footer class="flex relative bg-[#111827]">
-			<div class="flex justify-between w-full h-[160px] pt-[32px] pb-[64px] mobile:mx-[16px] tablet:mx-[24px] desktop:mx-[200px]">
+			<div class="flex justify-between w-full h-[160px] pt-[32px] pb-[64px] mobile:mx-[16px] tablet:mx-[24px] desktop:mx-[200px] *:shrink-0">
 				<div class="font-[400] text-[#72787F] text-[16px] mobile:absolute mobile:bottom-[32px]">
 					@codeit - 2024
 				</div>
 				<div class="flex gap-[30px]">
-				{children?.map((args, index) =>
+				{props.children?.map((args, index) =>
 				(
 					<Link key={index} href={args.href}>
 						<div class="font-[400] text-[#E5E7EB] text-[16px]">

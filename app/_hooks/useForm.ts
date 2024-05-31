@@ -15,7 +15,19 @@ export const enum Trigger
 	INPUT,
 	SUBMIT,
 }
+/*
+TODO)
 
+id, onSubmit, onTrigger ...triggers
+
+return { values, errors, disabled, verify, message }
+
+onCheck(...) => Nullable<string>
+->
+onTrigger(input, trigger, causes) => void;
+
+and use message(message: string) to update errors instead
+*/
 export default function useForm(id: string, onSubmit: (data: FormData) => void, onCheck: (input: HTMLInputElement, values: Record<string, string>, causes: Set<Cause>) => Nullable<string>, triggers: Trigger[])
 {
 	const form = useRef<Nullable<HTMLFormElement>>(null);
