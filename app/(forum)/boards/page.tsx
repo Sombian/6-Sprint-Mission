@@ -69,7 +69,7 @@ export default function Page()
 			<div class="mt-[40px] mb-[136px]">
 				<div class="flex justify-between font-[700] text-[20px] text-[#111827]">
 					게시글
-					<Link href="/post">
+					<Link href="/addboard">
 						<div class="button w-[88px] h-[42px] rounded-[8px] font-[600] text-[16px]">
 							글쓰기
 						</div>
@@ -80,25 +80,14 @@ export default function Page()
 						<Image src="/icons/search.svg" width={24} height={24} alt="likes" class="aspect-square"/>
 						<input placeholder="검색할 상품을 입력해주세요" class="grow h-[42px] bg-transparent outline-none" onChange={(event) => set_filter(event.target.value)}/>
 					</div>
-					<DropDown onSelect={(item) =>
-					{
-						switch (item)
-						{
-							case "최신순":
-							{
-								set_order("recent");
-								break;
-							}
-							case "좋아요순":
-							{
-								set_order("like");
-								break;
-							}
-						}
-					}}>
+					<DropDown>
 					{[
-						"최신순",
-						"좋아요순",
+						{
+							text: "최신순", handle() { set_order("recent"); }
+						},
+						{
+							text: "좋아요순", handle() { set_order("like"); }
+						}
 					]}
 					</DropDown>
 				</div>
