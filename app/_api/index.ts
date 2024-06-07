@@ -144,7 +144,7 @@ export default class API
 		}
 		public POST({ headers, articleId, ...body }: { headers?: HeadersInit } & { articleId: number; content: string; })
 		{
-			return super._POST<Server.Comment>(`https://panda-market-api.vercel.app/articles/${articleId}/comments}`, body, headers);
+			return super._POST<Server.Comment>(`https://panda-market-api.vercel.app/articles/${articleId}/comments`, body, headers);
 		}
 	};
 

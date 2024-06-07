@@ -11,7 +11,7 @@ import { useParams } from "next/navigation";
 
 export default function Page()
 {
-	const params = useParams();
+	const { id } = useParams();
 
 	const [article, set_article] = useState<Awaited<ReturnType<typeof API["articles/{articleId}"]["GET"]>>>();
 	const [comments, set_comments] = useState<Awaited<ReturnType<typeof API["articles/{articleId}/comments"]["GET"]>>["list"]>([]);
@@ -20,16 +20,34 @@ export default function Page()
 
 	useEffect(() =>
 	{
-		API["articles/{articleId}"].GET({ articleId: Number(params.id) }).then((response) =>
+		API["articles/{articleId}"].GET({ articleId: Number(id) }).then((response) =>
 		{
 			set_article(response);
 		});
-		API["articles/{articleId}/comments"].GET({ articleId: Number(params.id), limit: 3 }).then((response) =>
+		API["articles/{articleId}/comments"].GET({ articleId: Number(id), limit: 3 }).then((response) =>
 		{
 			set_comments(response.list);
 		});
 	},
-	[params]);
+	[id]);
+
+	const post_comment = useCallback((event: React.FormEvent<HTMLFormElement>) =>
+	{
+		API["articles/{articleId}/comments"].POST(
+		{
+			headers:
+			{
+				"Authorization": `Bearer ${document.cookie}`
+			},
+			articleId: Number(id), content: my_comment
+		}
+		).then((response) =>
+		{
+			set_comments((comments) => [...comments, response]);
+		});
+		event.preventDefault();
+	},
+	[id, my_comment]);
 
 	if (!article)
 	{
@@ -74,7 +92,7 @@ export default function Page()
 				article.content
 			}
 			</div>
-			<form class="flex flex-col gap-[16px] mt-[64px] mobile:mt-[40px]" onSubmit={(event) => API["articles/{articleId}/comments"].POST({ articleId: article.id, content: my_comment })}>
+			<form class="flex flex-col gap-[16px] mt-[64px] mobile:mt-[40px]" onSubmit={post_comment}>
 				<label for="comment" class="font-[600] text-[16px] text-[#111827]">
 					댓글 달기
 				</label>
@@ -82,7 +100,7 @@ export default function Page()
 					<textarea id="comment" placeholder="댓글을 입력해주세요" class="grow min-h-[104px] px-[24px] py-[16px] bg-transparent outline-none resize-none font-[400] text-[16px] leading-[24px] placeholder:text-[#9CA3AF]" onChange={(event) => { event.target.style.height = "auto"; event.target.style.height = event.target.scrollHeight + "px"; set_my_comment(event.target.value); }}/>
 				</div>
 				<div class="flex justify-end">
-					<button type="button" disabled={0 < my_comment.length} class="button h-[42px] px-[24px] rounded-[8px]">
+					<button type="submit" disabled={!(0 < my_comment.length)} class="button h-[42px] px-[24px] rounded-[8px]">
 						등록
 					</button>
 				</div>
@@ -91,12 +109,41 @@ export default function Page()
 			{
 				if (0 < comments.length)
 				{
-
+					return (
+						<div class="flex flex-col gap-[24px] mt-[24px] mobile:mt-[16px] mobile:gap-[16px]">
+						{comments.map((comment, index) =>
+						(
+							<div key={index} class="flex flex-col pb-[24px] gap-[24px] mobile:gap-[16px] mobile:pb-[24px] border-b-[1px] border-[#E5E7EB]">
+								<div class="flex justify-between">
+									{
+										comment.content
+									}
+									<Image src="/icons/kebab.svg" width={24} height={24} alt="likes" class="aspect-square"/>
+								</div>
+								<div class="flex items-center gap-[8px]">
+									<Image src="/icons/avatar.svg" width={32} height={32} alt="likes" class="aspect-square"/>
+									<div class="flex flex-col gap-[4px]">
+										<div class="font-[400] text-[12px] text-[#4B5563]">
+										{
+											comment.writer.nickname
+										}
+										</div>
+										<div class="font-[400] text-[12px] text-[#9CA3AF]">
+										{
+											comment.createdAt
+										}
+										</div>
+									</div>
+								</div>
+							</div>
+						))}
+						</div>
+					)
 				}
 				else
 				{
 					return (
-						<div class="flex flex-col items-center gap-[40px] mobile:gap-[20px]">
+						<div class="flex flex-col items-center gap-[40px] mt-[20px] mobile:gap-[20px] desktop:mt-0">
 							<div class="flex flex-col gap-[7px] items-center">
 								<Image src="/images/no_comments.png" alt="no comments" width={140} height={140}/>
 								<div class="font-[400] text-center text-[16px] text-[#9CA3AF] leading-[24px]">
