@@ -33,15 +33,7 @@ export default function Page()
 
 	const post_comment = useCallback((event: React.FormEvent<HTMLFormElement>) =>
 	{
-		API["articles/{articleId}/comments"].POST(
-		{
-			headers:
-			{
-				"Authorization": `Bearer ${document.cookie}`
-			},
-			articleId: Number(id), content: my_comment
-		}
-		).then((response) =>
+		API["articles/{articleId}/comments"].POST({ articleId: Number(id), content: my_comment }, { "Authorization": `Bearer ${document.cookie}` }).then((response) =>
 		{
 			set_comments((comments) => [...comments, response]);
 		});

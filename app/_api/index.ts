@@ -34,7 +34,7 @@ abstract class Request
 	{
 		return new Promise<T>(async (resolve, reject) =>
 		{
-			const response = await fetch(url, { method: "DELETE" }); const json = await response.json();
+			const response = await fetch(url, { method: "DELETE", headers }); const json = await response.json();
 
 			if (response.ok) return resolve(json); else throw reject(json);
 		});
@@ -102,7 +102,7 @@ export default class API
 
 	public static ["auth/signIn"] = new class extends Request
 	{
-		public POST({ headers, ...body }: { headers?: HeadersInit } & { email: string; password: string; })
+		public POST({ ...body }: { email: string; password: string; }, headers?: HeadersInit)
 		{
 			return super._POST<Server.Auth>(`https://panda-market-api.vercel.app/auth/signIn`, body, headers);
 		}
@@ -110,7 +110,7 @@ export default class API
 
 	public static ["auth/signUp"] = new class extends Request
 	{
-		public POST({ headers, ...body }: { headers?: HeadersInit } & { email: string; nickname: string; password: string; passwordConfirmation: string; })
+		public POST({ ...body }: { email: string; nickname: string; password: string; passwordConfirmation: string; }, headers?: HeadersInit)
 		{
 			return super._POST<Server.Auth>(`https://panda-market-api.vercel.app/auth/signUp`, body, headers);
 		}
@@ -118,11 +118,11 @@ export default class API
 
 	public static ["articles"] = new class extends Request
 	{
-		public GET({ headers, ...query }: { headers?: HeadersInit } & { page: number; pageSize: number; orderBy: "recent" | "like"; keyword?: string; })
+		public GET({ ...query }: { page: number; pageSize: number; orderBy: "recent" | "like"; keyword?: string; }, headers?: HeadersInit)
 		{
 			return super._GET<Server.Bundle<Server.Article>>(`https://panda-market-api.vercel.app/articles?${API.query(query)}`);
 		}
-		public POST({ headers, ...body }: { headers?: HeadersInit } & { title: string; content: string; image?: string; })
+		public POST({ ...body }: { title: string; content: string; image?: string; }, headers?: HeadersInit)
 		{
 			return super._POST<Server.Article>(`https://panda-market-api.vercel.app/articles`, body, headers);
 		}
@@ -130,7 +130,7 @@ export default class API
 
 	public static ["articles/{articleId}"] = new class extends Request
 	{
-		public GET({ headers, articleId, ...query }: { headers?: HeadersInit } & { articleId: number; })
+		public GET({ articleId, ...query }: { articleId: number; }, headers?: HeadersInit)
 		{
 			return super._GET<Server.Article>(`https://panda-market-api.vercel.app/articles/${articleId}`, headers);
 		}
@@ -138,11 +138,11 @@ export default class API
 
 	public static ["articles/{articleId}/comments"] = new class extends Request
 	{
-		public GET({ headers, articleId, ...query }: { headers?: HeadersInit } & { articleId: number; limit: number; cursor?: number; })
+		public GET({ articleId, ...query }: { articleId: number; limit: number; cursor?: number; }, headers?: HeadersInit)
 		{
 			return super._GET<Server.Bundle<Server.Comment>>(`https://panda-market-api.vercel.app/articles/${articleId}/comments?${API.query(query)}`, headers);
 		}
-		public POST({ headers, articleId, ...body }: { headers?: HeadersInit } & { articleId: number; content: string; })
+		public POST({ articleId, ...body }: { articleId: number; content: string; }, headers?: HeadersInit)
 		{
 			return super._POST<Server.Comment>(`https://panda-market-api.vercel.app/articles/${articleId}/comments`, body, headers);
 		}
@@ -150,7 +150,7 @@ export default class API
 
 	public static ["products"] = new class extends Request
 	{
-		public GET({ headers, ...query }: { headers?: HeadersInit } & { page: number; pageSize: number; orderBy: "recent" | "favorite"; keyword?: string; })
+		public GET({ ...query }: { page: number; pageSize: number; orderBy: "recent" | "favorite"; keyword?: string; }, headers?: HeadersInit)
 		{
 			return super._GET<Server.Bundle<Server.Product>>(`https://panda-market-api.vercel.app/products?${API.query(query)}`, headers);
 		}
@@ -158,9 +158,9 @@ export default class API
 
 	public static ["products/{productId}"] = new class extends Request
 	{
-		public GET({ headers, productId, ...query }: { headers?: HeadersInit } & { productId: number; })
+		public GET({ productId, ...query }: { productId: number; }, headers?: HeadersInit)
 		{
-			return super._GET<Server.Product>(`https://panda-market-api.vercel.app/products/${productId}`);
+			return super._GET<Server.Product>(`https://panda-market-api.vercel.app/products/${productId}`, headers);
 		}
 	};
 }

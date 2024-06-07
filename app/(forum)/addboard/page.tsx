@@ -57,15 +57,7 @@ export default function Page()
 
 	const onSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) =>
 	{
-		API["articles"].POST(
-		{
-			headers:
-			{
-				"Authorization": `Bearer ${document.cookie}`
-			},
-			title: ref_title.current?.value!!, content: ref_content.current?.value!!, image: preview_imgs[0] as string,
-		}
-		).then((response) =>
+		API["articles"].POST({ title: ref_title.current?.value!!, content: ref_content.current?.value!!, image: preview_imgs[0] as string }, { "Authorization": `Bearer ${document.cookie}` }).then((response) =>
 		{
 			router.push(`/addboard/${response.id}`)
 		});
