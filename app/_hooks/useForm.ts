@@ -57,22 +57,21 @@ export default function useForm(id: string, triggers: Trigger[], onSubmit: (data
 		return buffer;
 	},
 	[]);
+
 	const message = useCallback((input: HTMLInputElement, value: Nullable<string> | (() => Nullable<string>)) =>
 	{
 		if (!form.current) throw new Error();
 		
 		const msg = value instanceof Function ? value() : value;
 		// anti-pattern
-		errors[input.name] = msg;
-
-		set_errors((errors) =>
-		{
-			checks.current[input.name] = !msg;
-			return { ...errors, [input.name]: msg };
-		});
+		errors[input.name] = msg; checks.current = { ...checks.current, [input.name]: !msg };
+		// actually update
+		set_errors((errors) => ({ ...errors, [input.name]: msg }));
+		// :valid :invalid supports
 		(form.current.elements[input.name as never] as HTMLInputElement).setCustomValidity(msg ?? "");
 	},
 	[errors]);
+
 	const notify = useCallback((name: string, trigger: Trigger = Trigger.VERIFY) =>
 	{
 		if (!form.current) throw new Error();
@@ -183,7 +182,7 @@ export default function useForm(id: string, triggers: Trigger[], onSubmit: (data
 		}
 		return set_disabled(false);
 	},
-	[checks]);
+	[checks.current]);
 
 	return {
 		values, errors, disabled, notify, causes, message,

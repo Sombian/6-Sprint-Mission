@@ -94,27 +94,29 @@ export default function Page()
 				<div class="flex flex-col">
 					{rest.filter((article) => article.title.includes(filter)).sort((a, b) => order === "recent" ? Date.parse(b.createdAt) - Date.parse(a.createdAt) : b.likeCount - a.likeCount).map((article, index) =>
 					(
-						<div key={index} class="flex flex-col min-h-[136px] py-[24px] border-b border-[#E5E7EB]">
-							<div class="grow flex justify-between gap-[8px] font-[600] text-[20px] text-[#1F2937] mobile:text-[18px] leading-[23.87px]">
-								{article.title}
-								{article.image && <div class="shrink-0 w-[72px] h-[72px] p-[12px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[8px]"><img src={article.image} alt="preview"/></div>}
-							</div>
-							<div class="flex justify-between mt-[16px]">
-								<div class="flex items-center gap-[8px]">
-									<Image src="/icons/avatar.svg" width={24} height={24} alt="likes" class="aspect-square"/>
-									<div class="flex items-center font-[400] text-[14px] text-[#4B5563]">
-										{article.writer.nickname}
+						<Link key={index} href={`addboard/${article.id}`}>
+							<div class="flex flex-col min-h-[136px] py-[24px] border-b border-[#E5E7EB]">
+								<div class="grow flex justify-between gap-[8px] font-[600] text-[20px] text-[#1F2937] mobile:text-[18px] leading-[23.87px]">
+									{article.title}
+									{article.image && <div class="shrink-0 w-[72px] h-[72px] p-[12px] bg-[#FFFFFF] border border-[#E5E7EB] rounded-[8px]"><img src={article.image} alt="preview"/></div>}
+								</div>
+								<div class="flex justify-between mt-[16px]">
+									<div class="flex items-center gap-[8px]">
+										<Image src="/icons/avatar.svg" width={24} height={24} alt="likes" class="aspect-square"/>
+										<div class="flex items-center font-[400] text-[14px] text-[#4B5563]">
+											{article.writer.nickname}
+										</div>
+										<div class="font-[400] text-[14px] text-[#9CA3AF]">
+											{new Date(article.createdAt).toLocaleDateString()}
+										</div>
 									</div>
-									<div class="font-[400] text-[14px] text-[#9CA3AF]">
-										{new Date(article.createdAt).toLocaleDateString()}
+									<div class="flex items-center w-[60px] gap-[8px] font-[400] text-[16px] text-[#4B5563]">
+										<Image src="/icons/favorite.svg" width={24} height={24} alt="likes" class="mx-[4px] aspect-square"/>
+										{article.likeCount}
 									</div>
 								</div>
-								<div class="flex items-center w-[60px] gap-[8px] font-[400] text-[16px] text-[#4B5563]">
-									<Image src="/icons/favorite.svg" width={24} height={24} alt="likes" class="mx-[4px] aspect-square"/>
-									{article.likeCount}
-								</div>
 							</div>
-						</div>
+						</Link>
 					))}
 				</div>
 			</div>

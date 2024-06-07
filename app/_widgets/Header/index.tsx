@@ -9,8 +9,6 @@ export default function Header(props: Readonly<{ children: { name: string; href:
 {
 	const pathname = usePathname();
 
-	console.log(pathname)
-
 	return (
 		<header class="flex sticky top-0 z-10 bg-[#FFFFFF] border-b border-b-[#DFDFDF]">
 			<div class="flex justify-between w-full h-[70px] py-[10px] mobile:mx-[16px] tablet:mx-[24px] desktop:mx-[200px] *:shrink-0">
