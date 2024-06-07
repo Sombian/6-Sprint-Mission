@@ -9,15 +9,20 @@ import useForm, { Cause, Trigger } from "@/app/_hooks/useForm";
 
 export default function Page()
 {
-	const { errors, verify, disabled } = useForm("signin",
-	// onSubmit
-	(data) =>
+	const signin = useForm("signin", [Trigger.BLUR, Trigger.CHANGE], (data) =>
 	{
 		console.log(data);
-	},
-	// onCheck
-	(input, values, causes) =>
+	});
+
+	signin.block(({ input, key }) =>
 	{
+		return false;
+	});
+
+	signin.verify(({ input, trigger }) =>
+	{
+		const causes = signin.causes(input);
+
 		if (causes.has(Cause.REQUIRED))
 		{
 			return `${input.name}을(를) 입력해주세요`;
@@ -35,9 +40,7 @@ export default function Page()
 			return `${input.name}을(를) ${input.maxLength}자 이하 입력해주세요`;
 		}
 		return null;
-	},
-	// triggers
-	[Trigger.BLUR, Trigger.INPUT]);
+	});
 	
 	return (
 		<>
@@ -78,12 +81,12 @@ export default function Page()
 							}
 						</div>
 						{
-							errors[args.id] && <div class="error text-[#F74747] text-[15px] font-[600] group-[:not(:has(:invalid))]:hidden">{errors[args.id]}</div>
+							signin.errors[args.id] && <div class="error text-[#F74747] text-[15px] font-[600] group-[:not(:has(:invalid))]:hidden">{signin.errors[args.id]}</div>
 						}
 					</div>
 				))}
 				</div>
-				<button type="submit" disabled={disabled} class="button h-[56px] rounded-[40px] text-[16px] font-[600] mobile:mt-[16px] tablet:mt-[24px] desktop:mt-[24px]">
+				<button type="submit" disabled={signin.disabled} class="button h-[56px] rounded-[40px] text-[16px] font-[600] mobile:mt-[16px] tablet:mt-[24px] desktop:mt-[24px]">
 					로그인
 				</button>
 			</form>

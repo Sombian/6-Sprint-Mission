@@ -1,14 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import API from "@/app/_api";
 
 import Link from "next/link";
 import Image from "next/image";
 
-import useBreakPoint from "@/app/_hooks/useBreakPoint";
 import DropDown from "@/app/_widgets/DropDown";
+
+import useBreakPoint from "@/app/_hooks/useBreakPoint";
 
 export default function Page()
 {
@@ -32,11 +33,6 @@ export default function Page()
 		});
 	},
 	[]);
-
-	const timestamp = useCallback((raw: string) =>
-	{
-		new Date()
-	});
 
 	return (
 		<>
