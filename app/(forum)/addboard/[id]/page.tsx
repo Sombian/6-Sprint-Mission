@@ -49,40 +49,30 @@ export default function Page()
 		<>
 			<div class="flex flex-col gap-[16px] mt-[24px] pb-[16px] border-b-[1px] border-[#E5E7EB] desktop:mt-[32px]">
 				<div class="flex justify-between font-[700] text-[#1F2937] text-[20px]">
-					{
-						article.title
-					}
+					{article.title}
 					<Image src="/icons/kebab.svg" width={24} height={24} alt="likes" class="aspect-square"/>
 				</div>
 				<div class="flex">
 					<div class="flex gap-[8px] items-center">
 						<Image src="/icons/avatar.svg" width={24} height={24} alt="likes" class="aspect-square"/>
 						<div class="font-[400] text-[14px] text-[#4B5563]">
-						{
-							article.writer.nickname
-						}
+							{article.writer.nickname}
 						</div>
 						<div class="font-[400] text-[12px] text-[#9CA3AF]">
-						{
-							new Date(article.createdAt).toLocaleDateString()
-						}
+							{new Date(article.createdAt).toLocaleDateString()}
 						</div>
 					</div>
 					<div class="w-[1px] mx-[16px] bg-[#E5E7EB]"/>
 					<div class="flex gap-[4px] items-center">
 						<Image src="/icons/favorite.svg" width={24} height={24} alt="likes" class="p-[5px] aspect-square"/>
 						<div class="font-[400] text-[14px] text-[#9CA3AF]">
-						{
-							article.likeCount
-						}
+							{article.likeCount}
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="mt-[16px] font-[400] text-[16px] text-[#1F2937] leading-[24px]">
-			{
-				article.content
-			}
+				{article.content}
 			</div>
 			<form class="flex flex-col gap-[16px] mt-[64px] mobile:mt-[40px]" onSubmit={post_comment}>
 				<label for="comment" class="font-[600] text-[16px] text-[#111827]">
@@ -107,23 +97,17 @@ export default function Page()
 						(
 							<div key={index} class="flex flex-col pb-[24px] gap-[24px] mobile:gap-[16px] mobile:pb-[24px] border-b-[1px] border-[#E5E7EB]">
 								<div class="flex justify-between">
-									{
-										comment.content
-									}
+									{comment.content}
 									<Image src="/icons/kebab.svg" width={24} height={24} alt="likes" class="aspect-square"/>
 								</div>
 								<div class="flex items-center gap-[8px]">
 									<Image src="/icons/avatar.svg" width={32} height={32} alt="likes" class="aspect-square"/>
 									<div class="flex flex-col gap-[4px]">
 										<div class="font-[400] text-[12px] text-[#4B5563]">
-										{
-											comment.writer.nickname
-										}
+											{comment.writer.nickname}
 										</div>
 										<div class="font-[400] text-[12px] text-[#9CA3AF]">
-										{
-											comment.createdAt
-										}
+											{comment.createdAt}
 										</div>
 									</div>
 								</div>

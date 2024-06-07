@@ -5,9 +5,7 @@ export default function Layout(props: Readonly<Pick<Props, "children">>)
 	return (
 		<html>
 			<body>
-			{
-				props.children
-			}
+				{props.children}
 			</body>
 	  	</html>
 	);

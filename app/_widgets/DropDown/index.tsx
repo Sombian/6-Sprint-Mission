@@ -35,14 +35,10 @@ export default function DropDown(props: Readonly<{ children: { text: string; han
 				{props.children.map((option, index, array) =>
 				(
 					<>
-					<div key={index} class="flex items-center justify-center h-[42px]" onClick={() => { set_select(index); set_active(false); }}>
-					{
-						option.text
-					}
-					</div>
-					{
-						index !== array.length - 1 && <hr/>
-					}
+						<div key={index} class="flex items-center justify-center h-[42px]" onClick={() => { set_select(index); set_active(false); }}>
+							{option.text}
+						</div>
+						{index !== array.length - 1 && <hr/>}
 					</>
 				))}
 			</div>

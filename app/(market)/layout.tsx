@@ -15,9 +15,7 @@ export default function Layout(props: Readonly<Pick<Props, "children">>)
 			]}
 			</Header>
 			<article class="grow mobile:px-[16px] tablet:px-[24px] desktop:px-[24px] desktop:container desktop:box-content">
-			{
-				props.children
-			}
+				{props.children}
 			</article>
 		</main>
 	);

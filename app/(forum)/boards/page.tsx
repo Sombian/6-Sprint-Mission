@@ -18,8 +18,7 @@ export default function Page()
 	const [best, set_best] = useState<Awaited<ReturnType<typeof API["articles"]["GET"]>>["list"]>([]);
 	const [rest, set_rest] = useState<Awaited<ReturnType<typeof API["articles"]["GET"]>>["list"]>([]);
 
-	const [order, set_order] = useState("recent");
-	const [filter, set_filter] = useState("");
+	const [order, set_order] = useState("recent"); const [filter, set_filter] = useState("");
 
 	useEffect(() =>
 	{

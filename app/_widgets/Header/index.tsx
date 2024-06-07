@@ -25,9 +25,7 @@ export default function Header(props: Readonly<{ children: { name: string; href:
 				(
 					<Link key={index} href={args.href}>
 						<div class="flex items-center justify-center font-[700] text-nowrap h-full mobile:text-[16px] tablet:text-[18px] desktop:text-[18px] tablet:px-[16px] desktop:px-[16px] tablet:min-w-[109px] desktop:min-w-[109px]" style={{ color: new RegExp("^" + args.href).test(pathname) ? "#3692FF" : "#4B5563" }}>
-						{
-							args.name
-						}
+							{args.name}
 						</div>
 					</Link>
 				))}

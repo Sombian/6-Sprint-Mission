@@ -92,9 +92,7 @@ export default function Page()
 				(
 					<div key={index} class="group flex flex-col mobile:gap-[8px] tablet:gap-[8px] desktop:gap-[16px]">
 						<label for={args.id} class="text-[#1F2937] font-[700] mobile:text-[14px] tablet:text-[18px] desktop:text-[18px]">
-						{
-							args.label
-						}
+							{args.label}
 						</label>
 						<div class="flex h-[56px] px-[24px] bg-[#F3F4F6] rounded-[12px] border group-has-[:valid]:border-[#3692FF] group-has-[.error]:border-[#F74747]">
 							<input { ...args } name={args.label} class="grow text-[#1F2937] text-[16px] font-[400] outline-none bg-transparent placeholder:text-[#9CA3AF]"/>
@@ -121,9 +119,7 @@ export default function Page()
 								}}/>
 							}
 						</div>
-						{
-							signup.errors[args.label] && <div class="error text-[#F74747] text-[15px] font-[600] group-[:not(:has(:invalid))]:hidden">{signup.errors[args.label]}</div>
-						}
+						{signup.errors[args.label] && <div class="error text-[#F74747] text-[15px] font-[600] group-[:not(:has(:invalid))]:hidden">{signup.errors[args.label]}</div>}
 					</div>
 				))}
 				</div>
