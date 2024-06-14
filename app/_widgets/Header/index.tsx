@@ -4,9 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { usePathname } from "next/navigation";
+import useLocalStorage from "@/app/_hooks/useLocalStorage";
 
 export default function Header(props: Readonly<{ children: { name: string; href: string; }[]; }>)
 {
+	const [token, set_token] = useLocalStorage<Nullable<string>>("accessToken", null);
+
 	const pathname = usePathname();
 
 	return (
@@ -31,11 +34,17 @@ export default function Header(props: Readonly<{ children: { name: string; href:
 				))}
 				</div>
 				{/* signin */}
-				<Link href="/signin">
-					<div class="button font-[500] rounded-[8px] h-full mobile:w-[88px] tablet:w-[128px] desktop:w-[128px]">
-						로그인
-					</div>
-				</Link>
+				{
+					token
+					?
+					<Image src="icons/avatar.svg" alt="profile" width={40} height={40} class="aspect-square"/>
+					:
+					<Link href="/signin">
+						<div class="button font-[500] rounded-[8px] h-full mobile:w-[88px] tablet:w-[128px] desktop:w-[128px]">
+							로그인
+						</div>
+					</Link>
+				}
 			</div>
 		</header>
 	);
