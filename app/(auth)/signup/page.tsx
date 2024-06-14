@@ -37,7 +37,7 @@ export default function Page()
 		})
 		.then((response) =>
 		{
-			set_token(response.accessToken);
+			redirect("/");
 		})
 		.catch((error) =>
 		{
