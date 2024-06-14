@@ -7,20 +7,38 @@ import json from "./page.json";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useEffect } from "react";
+
+import { redirect } from "next/navigation";
+
 import useForm, { Cause, Trigger } from "@/app/_hooks/useForm";
+import useLocalStorage from "@/app/_hooks/useLocalStorage";
 
 export default function Page()
 {
+	const [token, set_token] = useLocalStorage<Nullable<string>>("accessToken", null);
+
+	useEffect(() =>
+	{
+		if (token)
+		{
+			redirect("/");
+		}
+	},
+	[token]);
+
 	const signin = useForm("signin", [Trigger.BLUR, Trigger.CHANGE], (data) =>
 	{
 		API["auth/signIn"].POST(
 		{
-			email: data.get("이메일") as string,
-			password: data.get("비밀번호") as string,
+			// @ts-ignore
+			email: data.get("이메일"),
+			// @ts-ignore
+			password: data.get("비밀번호"),
 		})
 		.then((response) =>
 		{
-			document.cookie = response.accessToken;
+			set_token(response.accessToken);
 		})
 		.catch((error) =>
 		{
