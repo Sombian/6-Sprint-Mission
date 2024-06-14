@@ -7,22 +7,37 @@ import json from "./page.json";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useEffect } from "react";
+
+import { redirect } from "next/navigation";
+
 import useForm, { Cause, Trigger } from "@/app/_hooks/useForm";
+import useLocalStorage from "@/app/_hooks/useLocalStorage";
+
 
 export default function Page()
 {
+	const [token, set_token] = useLocalStorage<Nullable<string>>("accessToken", null);
+
+	useEffect(() =>
+	{
+		if (token)
+		{
+			redirect("/");
+		}
+	},
+	[token]);
+
 	const signup = useForm("signup", [Trigger.BLUR, Trigger.CHANGE], (data) =>
 	{
 		API["auth/signUp"].POST(
 		{
-			email: data.get("이메일") as string,
-			nickname: data.get("닉네임") as string,
-			password: data.get("비밀번호") as string,
-			passwordConfirmation: data.get("비밀번호 확인") as string,
+			// @ts-ignore
+			email: data.get("이메일"), nickname: data.get("닉네임"), password: data.get("비밀번호"), passwordConfirmation: data.get("비밀번호 확인"),
 		})
 		.then((response) =>
 		{
-			document.cookie = response.accessToken;
+			set_token(response.accessToken);
 		})
 		.catch((error) =>
 		{

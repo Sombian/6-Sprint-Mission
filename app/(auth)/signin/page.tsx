@@ -32,9 +32,7 @@ export default function Page()
 		API["auth/signIn"].POST(
 		{
 			// @ts-ignore
-			email: data.get("이메일"),
-			// @ts-ignore
-			password: data.get("비밀번호"),
+			email: data.get("이메일"), password: data.get("비밀번호"),
 		})
 		.then((response) =>
 		{
